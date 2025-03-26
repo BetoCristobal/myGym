@@ -17,7 +17,7 @@ class ClienteProvider extends ChangeNotifier{
 
   Future<void> cargarClientes() async {    
     try{      
-      _clientes = await clienteRepo.getClientes();
+      _clientes = await clienteRepo.getClientesOrdenadosById();
       notifyListeners();  
     } catch(e){
       print("❌ Error al cargar clientes: $e");

@@ -32,6 +32,22 @@ class ClienteRepository {
   //Retorno: Devuelve la lista de clientes como Future<List<ClienteModel>>.
 
   //---------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+
+  Future<List<ClienteModel>> getClientesOrdenadosById() async {
+    final db= await _dbHelper.database;
+    final List<Map<String, dynamic>> maps = await db.query('clientes', orderBy: 'id DESC');
+    return maps.map((map) => ClienteModel.fromMap(map)).toList();
+  }
+
+  //Flujo completo
+  //Consulta SQL: Obtiene todas las filas de la tabla clientes como una lista de Maps.
+
+  //Transformación: Convierte cada Map en un objeto ClienteModel.
+
+  //Retorno: Devuelve la lista de clientes como Future<List<ClienteModel>>.
+
+  //---------------------------------------------------------------------------------
 
   Future<void> updateCliente(ClienteModel cliente) async {
     final db= await _dbHelper.database;

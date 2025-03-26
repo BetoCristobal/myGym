@@ -21,7 +21,7 @@ class ClienteCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("${cliente.nombres} ${cliente.apellidos}"),
+                      Text("${cliente.id}.- ${cliente.nombres} ${cliente.apellidos}"),
                       Text("Fecha de pago: 29-03-25"),
                       Text("Próxima fecha de pago: 29-04-25"),
                       Text("Días restantes: 30"),
