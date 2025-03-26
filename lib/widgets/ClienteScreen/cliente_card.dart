@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_eliminar_cliente.dart';
+import 'package:my_gym_oficial/widgets/ClienteScreen/form_agregar_editar_cliente.dart';
 
 class ClienteCard extends StatelessWidget {
   final ClienteModel cliente;
@@ -31,6 +32,16 @@ class ClienteCard extends StatelessWidget {
                     icon: Icon(Icons.more_vert),
                     onSelected: (value) {
                       switch(value) {
+                        case 'editar_cliente':
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context, 
+                            builder: (BuildContext context) {
+                              return FormAgregarEditarCliente(estaEditando: true, cliente: cliente,);
+                            }
+                          );
+                          break;
+
                         case 'eliminar_cliente':
                           AlertDialogEliminarCliente(context, cliente.id!);
                           break;
@@ -55,7 +66,7 @@ class ClienteCard extends StatelessWidget {
                           child: Text("Enviar WhatsApp")
                         ),
                         PopupMenuItem(
-                          //value: ,
+                          value: "editar_cliente",
                           child: Text("Editar cliente")
                         ),
                         PopupMenuItem(

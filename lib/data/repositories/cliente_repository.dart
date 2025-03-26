@@ -41,6 +41,7 @@ class ClienteRepository {
       where: 'id = ?',
       whereArgs: [cliente.id]
     );
+    print("SE ACTUALIZO EL CLIENTE");
   }
 
 

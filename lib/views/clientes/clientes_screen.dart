@@ -13,12 +13,6 @@ class ClientesScreen extends StatelessWidget {
   Widget build(BuildContext context) {    
     final clienteProvider = Provider.of<ClienteProvider>(context);
 
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-    final nombresController = TextEditingController();
-    final apellidosController = TextEditingController();
-    final telefonoController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Clientes"),
@@ -33,13 +27,7 @@ class ClientesScreen extends StatelessWidget {
               isScrollControlled: true,
               context: context, 
               builder: (BuildContext context) {
-                return FormAgregarEditarCliente(
-                  estaEditando: false,
-                  formKey: formKey,
-                  nombresController: nombresController,
-                  apellidosController: apellidosController,
-                  telefonoController: telefonoController,
-                );
+                return FormAgregarEditarCliente(estaEditando: false,);
               }
             );
           }, 

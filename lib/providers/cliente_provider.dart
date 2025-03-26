@@ -43,10 +43,18 @@ class ClienteProvider extends ChangeNotifier{
     }
   }
 
-  Future<void> actualizarCliente(ClienteModel cliente) async {
+  Future<void> actualizarCliente(int id, String nombres, String apellidos, String telefono, String estatus) async {
     try {
-      await clienteRepo.updateCliente(cliente);      
+      final clienteActualizado = ClienteModel(
+        id: id,
+        nombres: nombres, 
+        apellidos: apellidos, 
+        telefono: telefono, 
+        estatus: estatus
+      );
+      await clienteRepo.updateCliente(clienteActualizado);      
       notifyListeners();
+      await cargarClientes();
      } catch(e) {
       print("❌ Error al actualizar cliente: $e");
     }

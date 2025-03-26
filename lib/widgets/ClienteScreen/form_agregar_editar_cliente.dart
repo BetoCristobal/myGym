@@ -1,31 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:provider/provider.dart';
 import '../../providers/cliente_provider.dart';
 
-class FormAgregarEditarCliente extends StatelessWidget {
-
+class FormAgregarEditarCliente extends StatefulWidget {
+  final ClienteModel? cliente;
   final bool estaEditando;
-  final GlobalKey<FormState> formKey;
-  final TextEditingController nombresController;
-  final TextEditingController apellidosController;
-  final TextEditingController telefonoController;
-  //final String? pathFotografiaInicial;
 
-  const FormAgregarEditarCliente({
-    super.key,
-    required this.estaEditando,
-    required this.formKey,
-    required this.nombresController,
-    required this.apellidosController,
-    required this.telefonoController,
-    //this.pathFotografiaInicial
-  });
+  const FormAgregarEditarCliente({super.key, this.cliente, required this.estaEditando});
+
+  @override
+  State<FormAgregarEditarCliente> createState() => _FormAgregarEditarClienteState();
+}
+
+class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  late TextEditingController nombresController;
+  late TextEditingController apellidosController;
+  late TextEditingController telefonoController;
+
+  @override
+  void initState() {
+    super.initState();
+    nombresController = TextEditingController(
+      text: widget.estaEditando == true ? widget.cliente?.nombres : ""
+    );
+    apellidosController = TextEditingController(
+      text: widget.estaEditando == true ? widget.cliente?.apellidos : ""
+    );
+    telefonoController = TextEditingController(
+      text: widget.estaEditando == true ? widget.cliente?.telefono : ""
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    
-
     return IntrinsicHeight(
       child: Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -36,7 +47,7 @@ class FormAgregarEditarCliente extends StatelessWidget {
             child: Column(
               children: [
                 // TITULO
-                Text(estaEditando == false ? "Agregar cliente" : "Editar cliente"),
+                Text(widget.estaEditando == false ? "Agregar cliente" : "Editar cliente"),
             
                 // CAMPO NOMBRES
                 Container(
@@ -81,7 +92,7 @@ class FormAgregarEditarCliente extends StatelessWidget {
                         final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
         
                         // SI NO ESTA EDITANDO, OSEA SI SE ESTA AGREGANDO NUEVO CLIENTE
-                        if(!estaEditando) {
+                        if(widget.estaEditando == false) {
                           await clienteProvider.agregarCliente(
                             nombresController.text, 
                             apellidosController.text, 
@@ -89,12 +100,20 @@ class FormAgregarEditarCliente extends StatelessWidget {
                           );
 
                           Navigator.pop(context);
-                        } else {
-                          //TODO LOGICA ACTUALIZAR CLIENTE
+                        } else if(widget.estaEditando == true) {
+                          int? id = widget.cliente?.id;
+                          await clienteProvider.actualizarCliente(
+                            id!,
+                            nombresController.text, 
+                            apellidosController.text, 
+                            telefonoController.text,
+                            widget.cliente!.estatus,
+                          );
+                          Navigator.pop(context);
                         }
                       }
                     }, 
-                    child: Text(estaEditando == false ? "Guardar" : "Actualizar")
+                    child: Text(widget.estaEditando == false ? "Guardar" : "Actualizar")
                   ),
                 )
               ],
