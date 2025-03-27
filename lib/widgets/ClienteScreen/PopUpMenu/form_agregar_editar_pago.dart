@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/data/models/pago_model.dart';
+import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/utils/seleccionar_fecha.dart';
+import 'package:provider/provider.dart';
 
 class FormAgregarEditarPago extends StatefulWidget {
+  final int idCliente;
   final PagoModel? pagoEditar;
   final bool estaEditando;
 
-  const FormAgregarEditarPago({super.key, required this.estaEditando, this.pagoEditar});
+  const FormAgregarEditarPago({super.key, required this.idCliente, required this.estaEditando, this.pagoEditar});
 
   @override
   State<FormAgregarEditarPago> createState() => _FormAgregarEditarPagoState();
@@ -139,9 +142,21 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if(formKeyPagos.currentState!.validate() && fechaPago != null && fechaProximoPago != null && valorDropDownButton != null) {
+                        final pagoProvider = Provider.of<PagoProvider>(context, listen: false);
+                        if(widget.estaEditando == false) {
+                          await pagoProvider.agregarPago(
+                            widget.idCliente, 
+                            double.parse(montoController.text), 
+                            fechaPago!, 
+                            fechaProximoPago!, 
+                            valorDropDownButton!
+                          );
+                          Navigator.pop(context);
+                        } else {
 
+                        }
                       } else {
                         showDialog(
                           context: context, 

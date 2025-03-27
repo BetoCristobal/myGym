@@ -8,18 +8,31 @@ class PagoProvider extends ChangeNotifier {
   PagoProvider(this.pagoRepo);
 
   List<PagoModel> _pagos = [];
+  List<PagoModel> _pagosPorCliente = [];
 
   List<PagoModel> get pagos => _pagos;
+  List<PagoModel> get pagosPorCliente => _pagosPorCliente;
 
   Future<void> cargarPagosTodosById() async {
     try{
       _pagos = await pagoRepo.getPagosTodosOrdenadosById();
+      print("✅Se obtuvieron todos los pagos");
     } catch(e) {
-      print("❌ Error al cargar clientes: $e");
+      print("❌ Error al cargar todos pagos: $e");
     }
   }
 
-  Future<void> agregarPago(int idCliente, int monto, DateTime fechaPago, DateTime proximaFechaPago, String tipoPago) async {
+  Future<void> cargarPagosClientePorId(int idCliente) async {
+    try{
+      _pagosPorCliente = await pagoRepo.getPagosPorIdCliente(idCliente);
+      notifyListeners();
+      print("✅Se obtuvieron los pagos POR CLIENTE");
+    } catch(e){
+      print("❌ Error al cargar los PAGOS POR CLIENTE: $e");
+    }
+  }
+
+  Future<void> agregarPago(int idCliente, double monto, DateTime fechaPago, DateTime proximaFechaPago, String tipoPago) async {
     try{
       final nuevoPago = PagoModel(
         idCliente: idCliente, 
@@ -35,7 +48,7 @@ class PagoProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> actualizarUltimoPago(int id, int idCliente, int monto, DateTime fechaPago, DateTime proximaFechaPago, String tipoPago) async {
+  Future<void> actualizarUltimoPago(int id, int idCliente, double monto, DateTime fechaPago, DateTime proximaFechaPago, String tipoPago) async {
     try{
       final pagoActualizado = PagoModel(
         id: id,

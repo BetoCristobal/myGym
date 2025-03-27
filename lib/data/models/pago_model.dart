@@ -1,7 +1,7 @@
 class PagoModel {
   int? id;
   int idCliente;
-  int montoPago;
+  double montoPago;
   DateTime fechaPago;
   DateTime proximaFechaPago;
   String tipoPago;
@@ -15,27 +15,27 @@ class PagoModel {
     required this.tipoPago,
   });
 
-  // Pago -> Map Para leerlo en la UI
+  // Pago -> Map PARA GUARDAR EN BD
   Map<String, dynamic> toMap() {
     return{
       'id': id,
-      'idCliente': idCliente,
-      'montoPago': montoPago,
-      'fechaPago': fechaPago,
-      'proximaFechaPago': proximaFechaPago,
-      'tipoPago': tipoPago
+      'id_cliente': idCliente,
+      'monto_pago': montoPago,
+      'fecha_pago': fechaPago.toIso8601String(),
+      'proxima_fecha_pago': proximaFechaPago.toIso8601String(),
+      'tipo_pago': tipoPago
     };
   }
 
-  //Map -> Pago, para guardar en BD
+  //Map -> Pago, de la BD  a PagoModel
   factory PagoModel.fromMap(Map<String, dynamic> map){
     return PagoModel(
       id: map['id'], 
-      idCliente: map['idCliente'], 
-      montoPago: map['montoPago'], 
-      fechaPago: map['fechaPago'], 
-      proximaFechaPago: map['proximaFechaPago'], 
-      tipoPago: map['tipoPago']
+      idCliente: map['id_cliente'], 
+      montoPago: map['monto_pago'], 
+      fechaPago: DateTime.parse(map['fecha_pago']), 
+      proximaFechaPago: DateTime.parse(map['proxima_fecha_pago']), 
+      tipoPago: map['tipo_pago']
     );
   }
 }

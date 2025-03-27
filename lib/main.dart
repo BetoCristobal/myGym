@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_gym_oficial/data/repositories/cliente_repository.dart';
+import 'package:my_gym_oficial/data/repositories/pago_repository.dart';
 import 'package:my_gym_oficial/providers/cliente_provider.dart';
+import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/providers/toggle_buttons_provider.dart';
 import 'package:my_gym_oficial/views/clientes/clientes_screen.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +13,8 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ToggleButtonsProvider()),
-        ChangeNotifierProvider(create: (_) => ClienteProvider(ClienteRepository())), 
+        ChangeNotifierProvider(create: (_) => ClienteProvider(ClienteRepository())),
+        ChangeNotifierProvider(create: (_) => PagoProvider(PagoRepository())), 
       ],
       child: MyApp(),
     )

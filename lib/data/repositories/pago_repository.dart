@@ -18,6 +18,17 @@ class PagoRepository {
     return maps.map((map) => PagoModel.fromMap(map)).toList();
   }
 
+  Future<List<PagoModel>> getPagosPorIdCliente(int idCliente) async {
+    final db = await _dbHelper.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'pagos',
+      where: 'id_cliente = ?',
+      whereArgs: [idCliente],
+      orderBy: 'id DESC'
+    );
+    return maps.map((map) => PagoModel.fromMap(map)).toList();
+  }
+
 
   Future<void> updatePago(PagoModel pago) async {
     final db = await _dbHelper.database;
