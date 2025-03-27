@@ -84,7 +84,7 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
             
                 // BOTON GUARDAR
                 Container(
-                  margin: EdgeInsets.only(top: 30),
+                  margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: ElevatedButton(
                     onPressed: () async {
                       if(formKey.currentState!.validate()) {

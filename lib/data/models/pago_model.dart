@@ -1,5 +1,5 @@
 class PagoModel {
-  int id;
+  int? id;
   int idCliente;
   int montoPago;
   DateTime fechaPago;
@@ -7,7 +7,7 @@ class PagoModel {
   String tipoPago;
 
   PagoModel({
-    required this.id,
+    this.id,
     required this.idCliente,
     required this.montoPago,
     required this.fechaPago,

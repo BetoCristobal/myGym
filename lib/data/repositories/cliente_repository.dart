@@ -6,7 +6,7 @@ class ClienteRepository {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   Future<void> insertCliente(ClienteModel cliente) async {
-    final db= await _dbHelper.database;
+    final db = await _dbHelper.database;
     print(cliente);
     await db.insert('clientes', cliente.toMap());
   }

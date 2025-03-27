@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_eliminar_cliente.dart';
+import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/form_agregar_editar_pago.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/form_agregar_editar_cliente.dart';
 
 class ClienteCard extends StatelessWidget {
@@ -32,6 +33,25 @@ class ClienteCard extends StatelessWidget {
                     icon: Icon(Icons.more_vert),
                     onSelected: (value) {
                       switch(value) {
+                        case 'ver_informacion':
+                          break;  
+
+                        case 'realizar_pago':
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context, 
+                            builder: (BuildContext context) {
+                              return FormAgregarEditarPago(estaEditando: false,);
+                            }
+                          );
+                          break;
+
+                        case 'ver_pagos':
+                          break;
+
+                        case 'enviar_whatsapp':
+                          break;
+
                         case 'editar_cliente':
                           showModalBottomSheet(
                             isScrollControlled: true,
@@ -54,7 +74,7 @@ class ClienteCard extends StatelessWidget {
                           child: Text("Ver información")
                         ),
                         PopupMenuItem(
-                          //value: ,
+                          value: "realizar_pago",
                           child: Text("Realizar pago")
                         ),
                         PopupMenuItem(
