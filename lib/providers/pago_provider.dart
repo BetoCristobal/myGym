@@ -60,6 +60,7 @@ class PagoProvider extends ChangeNotifier {
       );
       await pagoRepo.updatePago(pagoActualizado);
       notifyListeners();
+      await cargarPagosClientePorId(idCliente);
       //TODO CREO QUE AQUI NECESITO ACTUALIZAR UI CUANDO SE VEANM LOS PAGOS POR CLIENTE
       //TODO => FALTA CARGAR PAGOS
     } catch(e) {

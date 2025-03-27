@@ -154,8 +154,16 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
                             valorDropDownButton!
                           );
                           Navigator.pop(context);
-                        } else {
-
+                        } else if(widget.estaEditando == true) {
+                          await pagoProvider.actualizarUltimoPago(
+                            widget.pagoEditar!.id!, 
+                            widget.pagoEditar!.idCliente!, 
+                            double.parse(montoController.text), 
+                            fechaPago!, 
+                            fechaProximoPago!, 
+                            valorDropDownButton!
+                          );
+                          Navigator.pop(context);
                         }
                       } else {
                         showDialog(
