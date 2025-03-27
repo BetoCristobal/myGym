@@ -29,7 +29,7 @@ class PagoProvider extends ChangeNotifier {
         tipoPago: tipoPago
       );
       await pagoRepo.insertPago(nuevoPago);
-      print("Se agrego nuevo pago: $nuevoPago");
+      print("✅Se agrego nuevo pago: $nuevoPago");
     }catch(e) {
       print("❌Error al agregar pago: $e");
     }

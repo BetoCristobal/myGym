@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:my_gym_oficial/data/models/pago_model.dart';
+import 'package:my_gym_oficial/utils/seleccionar_fecha.dart';
 
 class FormAgregarEditarPago extends StatefulWidget {
-
+  final PagoModel? pagoEditar;
   final bool estaEditando;
 
-  const FormAgregarEditarPago({super.key, required this.estaEditando});
+  const FormAgregarEditarPago({super.key, required this.estaEditando, this.pagoEditar});
 
   @override
   State<FormAgregarEditarPago> createState() => _FormAgregarEditarPagoState();
@@ -12,10 +15,38 @@ class FormAgregarEditarPago extends StatefulWidget {
 
 class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
 
+  final GlobalKey<FormState> formKeyPagos = GlobalKey<FormState>();
+  TextEditingController montoController = TextEditingController();
+
+  DateTime? fechaPago;
+  String txtFechaPago = "Seleccionar"; 
+  DateTime? fechaProximoPago;
+  String txtFechaProximoPago = 'Seleccionar';
+
   final List<String> options = ['Efectivo', 'Tarjeta', 'Transferencia'];
   String? valorDropDownButton;
 
-  TextEditingController montoController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    if(widget.estaEditando == true) {
+      montoController = TextEditingController(text: widget.pagoEditar!.montoPago.toString());
+
+      valorDropDownButton = widget.pagoEditar!.tipoPago;
+
+      fechaPago = widget.pagoEditar!.fechaPago;
+      fechaProximoPago = widget.pagoEditar!.proximaFechaPago;
+
+      txtFechaPago = DateFormat("dd-MM-yyyy").format(fechaPago!);
+      txtFechaProximoPago = DateFormat("dd-MM-yyyy").format(fechaProximoPago!);
+    }
+    /*
+    montoController = TextEditingController(
+      text: widget.estaEditando == true ? widget.pagoEditar?.montoPago.toString() : "");
+    fechaPago = widget.estaEditando == true ? widget.pagoEditar?.fechaPago : null;
+    fechaProximoPago = widget.estaEditando == true ? widget.pagoEditar?.proximaFechaPago : null;
+    */
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +54,7 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
       child: Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Form(
+          key: formKeyPagos,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -68,11 +100,17 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
                       //FECHA PAGO
                       Column(
                         children: [
-                          Text("Fecha de pago:"),
-                          
+                          Text("Fecha de pago:"),                          
                           ElevatedButton(
-                            onPressed: () {}, 
-                            child: Text(widget.estaEditando == false ? "Seleccionar" : "")
+                            onPressed: () async {
+                              fechaPago = await seleccionarFecha(context);
+                              if(fechaPago != null){
+                                setState(() {
+                                  txtFechaPago = DateFormat("dd-MM-yyyy").format(fechaPago!);
+                                });
+                              }
+                            }, 
+                            child: Text(txtFechaPago)
                           ),  
                         ],
                       ),
@@ -80,11 +118,17 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
                       //FECHA PROXIMO PAGO
                       Column(
                         children: [
-                          Text("Próximo pago:"),
-                              
+                          Text("Próximo pago:"),                              
                           ElevatedButton(
-                            onPressed: () {}, 
-                            child: Text(widget.estaEditando == false ? "Seleccionar" : "")
+                            onPressed: () async {
+                              fechaProximoPago = await seleccionarFecha(context);
+                              if(fechaProximoPago != null) {
+                                setState(() {
+                                  txtFechaProximoPago = DateFormat('dd-MM-yyyy').format(fechaProximoPago!);
+                                });
+                              }
+                            }, 
+                            child: Text(txtFechaProximoPago)
                           ),
                         ],
                       ),
@@ -95,7 +139,21 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: ElevatedButton(
-                    onPressed: () {}, 
+                    onPressed: () {
+                      if(formKeyPagos.currentState!.validate() && fechaPago != null && fechaProximoPago != null && valorDropDownButton != null) {
+
+                      } else {
+                        showDialog(
+                          context: context, 
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Advertencia:"),
+                              content: Text("Debe ingresar monto, tipo de pago y fechas.")
+                            );
+                          }
+                        );
+                      }
+                    }, 
                     child: Text(widget.estaEditando == false ? "Guardar" : "Actualizar")
                   ),
                 ),
