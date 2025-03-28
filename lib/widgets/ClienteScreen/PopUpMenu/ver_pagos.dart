@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
+import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/card_pagos_cliente.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/form_agregar_editar_pago.dart';
 import 'package:provider/provider.dart';
 
@@ -22,18 +23,11 @@ void VerPagos(BuildContext context, ClienteModel cliente) async {
           width: double.maxFinite,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              //ENCABEZADO
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text("#"), Text("Pago:"), Text("Vence:"), Text("Monto:"), Text("Tipo:")
-                ],
-              ),
+            children: [              
           
               Expanded(
                 child: Consumer<PagoProvider>(
-                  builder: (context, PagoProvider, _) {
+                  builder: (context, pagoProvider, _) {
                 
                     if(pagoProvider.pagosPorCliente.isEmpty) {                    
                       return const Center(child: Text("No hay pagos registrados"),);                        
@@ -45,70 +39,21 @@ void VerPagos(BuildContext context, ClienteModel cliente) async {
 
                         mostrarTextButtons = true;
 
+                        //OBTENEMOS EL NUMERO DE PAGO QUE SE MUESTRA EN #
+                        int numeroPago = pagoProvider.pagosPorCliente.length - index;
+
                         final pago = pagoProvider.pagosPorCliente[index];
-                        String txtFechaPago = DateFormat("dd-MM-yy").format(pago.fechaPago);
-                        String txtFechaProximoPago = DateFormat("dd-MM-yy").format(pago.proximaFechaPago);
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            //ID pago por cliente
-                            Text((pago.id).toString()),
-                    
-                            //FECHA PAGO
-                            Text(txtFechaPago),
-
-                            //FECHA PROXIMO PAGO
-                            Text(txtFechaProximoPago),
-
-                            //MONTO
-                            Text((pago.montoPago).toString()),
-
-                            //TIPO PAGO
-                            Text(pago.tipoPago),
-                          ]                    
+                        
+                        return CardPagosCliente(
+                          numeroPago: numeroPago, 
+                          pago: pago, 
+                          cliente: cliente,
                         );
                       },
                     );
                   }
                 ),
-              ),
-
-              //TextButtons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Visibility(
-                    visible: mostrarTextButtons,
-                    child: TextButton(
-                      onPressed: () {
-
-                        final ultimoPago = pagoProvider.pagosPorCliente.isNotEmpty
-                          ? pagoProvider.pagosPorCliente.first
-                          : null;
-
-                        showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context, 
-                          builder: (BuildContext context) {
-                            return FormAgregarEditarPago(
-                              idCliente: cliente.id!, 
-                              estaEditando: true, 
-                              pagoEditar: ultimoPago,
-                            );
-                          }
-                        );
-                      }, 
-                      child: Text("Editar último pago"),
-                    ),
-                  ),
-
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }, 
-                    child: Text("Cerrar"),
-                  ),
-              ],),       
+              ),      
             ],
           ),
         ),

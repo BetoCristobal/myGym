@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_gym_oficial/providers/cliente_provider.dart';
+import 'package:my_gym_oficial/views/reportes/reportes_screen.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/barra_busqueda.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/cliente_card.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/form_agregar_editar_cliente.dart';
@@ -17,9 +18,8 @@ class ClientesScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Clientes"),
         actions: [
-          //TODO: Dar acciones a botones de Appbar
           IconButton(onPressed: () {
-            
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ReportesScreen()));
           }, 
           icon: Icon(Icons.bar_chart), color: Colors.white,),
           IconButton(onPressed: () {
@@ -56,7 +56,7 @@ class ClientesScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: double.infinity,
               child: Consumer<ClienteProvider>(
-                builder: (context, ClienteProvider, _) {
+                builder: (context, clienteProvider, _) {
                   
                   if(clienteProvider.clientes.isEmpty) {
                     return const Center(child: Text("No hay clientes registrados"),);

@@ -16,6 +16,7 @@ class PagoProvider extends ChangeNotifier {
   Future<void> cargarPagosTodosById() async {
     try{
       _pagos = await pagoRepo.getPagosTodosOrdenadosById();
+      notifyListeners();
       print("✅Se obtuvieron todos los pagos");
     } catch(e) {
       print("❌ Error al cargar todos pagos: $e");
@@ -61,19 +62,16 @@ class PagoProvider extends ChangeNotifier {
       await pagoRepo.updatePago(pagoActualizado);
       notifyListeners();
       await cargarPagosClientePorId(idCliente);
-      //TODO CREO QUE AQUI NECESITO ACTUALIZAR UI CUANDO SE VEANM LOS PAGOS POR CLIENTE
-      //TODO => FALTA CARGAR PAGOS
     } catch(e) {
       print("❌Error al actualizar pago: $e");
     }
   }
 
-  Future<void> eliminarPago(int id) async {
+  Future<void> eliminarPago(int id, int idCliente) async {
     try{
       await pagoRepo.deletePago(id);
       notifyListeners();
-      //TODO CREO QUE AQUI NECESITO ACTUALIZAR UI CUANDO SE VEANM LOS PAGOS POR CLIENTE
-      //TODO => FALTA CARGAR PAGOS
+      await cargarPagosClientePorId(idCliente);      
     }catch(e) {
       print("❌ Error al eliminar pago: $e");
     }

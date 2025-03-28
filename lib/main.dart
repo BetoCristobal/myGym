@@ -5,6 +5,7 @@ import 'package:my_gym_oficial/providers/cliente_provider.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/providers/toggle_buttons_provider.dart';
 import 'package:my_gym_oficial/views/clientes/clientes_screen.dart';
+import 'package:my_gym_oficial/views/reportes/reportes_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => ClientesScreen(),
+        "reportesScreen": (context) => ReportesScreen(),
       },
     );
   }
