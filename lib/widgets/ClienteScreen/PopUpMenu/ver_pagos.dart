@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/card_pagos_cliente.dart';
-import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/form_agregar_editar_pago.dart';
 import 'package:provider/provider.dart';
 
 void VerPagos(BuildContext context, ClienteModel cliente) async {
 
   final pagoProvider = Provider.of<PagoProvider>(context, listen: false);
   await pagoProvider.cargarPagosClientePorId(cliente.id!);  
-
-  bool mostrarTextButtons = pagoProvider.pagosPorCliente.isEmpty ? false : true;
 
   showDialog(
     context: context, 
@@ -36,8 +32,6 @@ void VerPagos(BuildContext context, ClienteModel cliente) async {
                     return ListView.builder(
                       itemCount: pagoProvider.pagosPorCliente.length,
                       itemBuilder: (context, index) {
-
-                        mostrarTextButtons = true;
 
                         //OBTENEMOS EL NUMERO DE PAGO QUE SE MUESTRA EN #
                         int numeroPago = pagoProvider.pagosPorCliente.length - index;

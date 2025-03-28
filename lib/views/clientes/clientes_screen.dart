@@ -12,8 +12,6 @@ class ClientesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {    
-    final clienteProvider = Provider.of<ClienteProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Clientes"),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ContainerTotalTipoPago extends StatelessWidget {
-  Color colorFondo;
+  final Color colorFondo;
 
   ContainerTotalTipoPago({super.key, required this.colorFondo});
 

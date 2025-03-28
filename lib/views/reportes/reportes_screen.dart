@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/container_total_tipo_pago.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 /*

@@ -48,7 +48,7 @@ class ClienteCard extends StatelessWidget {
                           break;
 
                         case 'ver_pagos':
-                          VerPagos(context, cliente!);
+                          VerPagos(context, cliente);
                           break;
 
                         case 'enviar_whatsapp':

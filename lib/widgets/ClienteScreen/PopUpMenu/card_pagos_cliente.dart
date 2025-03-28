@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/data/models/pago_model.dart';
-import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_eliminar_pago.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/form_agregar_editar_pago.dart';
-import 'package:provider/provider.dart';
 
 class CardPagosCliente extends StatelessWidget {
-  int numeroPago;
-  ClienteModel cliente;
-  PagoModel pago;  
+  final int numeroPago;
+  final ClienteModel cliente;
+  final PagoModel pago;  
 
   CardPagosCliente({super.key, required this.numeroPago, required this.pago, required this.cliente});
 
