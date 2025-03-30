@@ -50,5 +50,23 @@ class PagoRepository {
       whereArgs: [id]
     );
   }
+
+  Future<PagoModel> obtenerUltimoPago(int idCliente) async {
+    final db = await _dbHelper.database;
+    final List<Map<String, dynamic>> pagos = await db.query(
+      'pagos',
+      where: 'id_Cliente = ?',
+      whereArgs: [idCliente],
+      orderBy: 'id DESC',
+      limit: 1
+    );
+    return PagoModel.fromMap(pagos.first);
+
+    /*if(pagos.isNotEmpty) {
+      return PagoModel.fromMap(pagos.first);
+    } else {
+      return null;
+    }*/
+  }
 }
 

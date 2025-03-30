@@ -155,7 +155,7 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
                           );
                           Navigator.pop(context);
                         } else if(widget.estaEditando == true) {
-                          await pagoProvider.actualizarUltimoPago(
+                          await pagoProvider.actualizarPago(
                             widget.pagoEditar!.id!, 
                             widget.pagoEditar!.idCliente, 
                             double.parse(montoController.text), 

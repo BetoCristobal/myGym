@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_gym_oficial/providers/cliente_provider.dart';
+import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/views/reportes/reportes_screen.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/barra_busqueda.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/cliente_card.dart';
@@ -55,6 +56,8 @@ class ClientesScreen extends StatelessWidget {
               width: double.infinity,
               child: Consumer<ClienteProvider>(
                 builder: (context, clienteProvider, _) {
+
+                  
                   
                   if(clienteProvider.clientes.isEmpty) {
                     return const Center(child: Text("No hay clientes registrados"),);
@@ -64,10 +67,13 @@ class ClientesScreen extends StatelessWidget {
                     itemCount: clienteProvider.clientes.length,
                     itemBuilder: (context, index) {
                       final cliente = clienteProvider.clientes[index];
-                      return ClienteCard(cliente: cliente,);
+
+                      final ultimoPago = Provider.of<PagoProvider>(context, listen: false)
+                    .obtenerUltimoPagoCliente(cliente.id!);
+                  
+                      return ClienteCard(cliente: cliente, ultimoPago: ultimoPago,);
                     }
-                  );
-            
+                  );            
                 },
               ),
             ),

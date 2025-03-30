@@ -9,9 +9,11 @@ class PagoProvider extends ChangeNotifier {
 
   List<PagoModel> _pagos = [];
   List<PagoModel> _pagosPorCliente = [];
+  PagoModel? _ultimoPagoCliente;
 
   List<PagoModel> get pagos => _pagos;
   List<PagoModel> get pagosPorCliente => _pagosPorCliente;
+  PagoModel? get ultimoPagoCliente => _ultimoPagoCliente;
 
   Future<void> cargarPagosTodosById() async {
     try{
@@ -49,7 +51,7 @@ class PagoProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> actualizarUltimoPago(int id, int idCliente, double monto, DateTime fechaPago, DateTime proximaFechaPago, String tipoPago) async {
+  Future<void> actualizarPago(int id, int idCliente, double monto, DateTime fechaPago, DateTime proximaFechaPago, String tipoPago) async {
     try{
       final pagoActualizado = PagoModel(
         id: id,
@@ -74,6 +76,16 @@ class PagoProvider extends ChangeNotifier {
       await cargarPagosClientePorId(idCliente);      
     }catch(e) {
       print("❌ Error al eliminar pago: $e");
+    }
+  }
+
+  //--------CARGAR ULTIMO PAGO POR CLIENTE
+  Future<PagoModel?> obtenerUltimoPagoCliente(int idCliente) async {
+    try {
+      return await pagoRepo.obtenerUltimoPago(idCliente);
+    } catch(e) {
+      print("❌ Error al obtener ultimo pago: $e");
+      return null;
     }
   }
 }
