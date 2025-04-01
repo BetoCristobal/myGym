@@ -46,6 +46,7 @@ class PagoProvider extends ChangeNotifier {
       );
       await pagoRepo.insertPago(nuevoPago);
       print("✅Se agrego nuevo pago: $nuevoPago");
+      await cargarPagosTodosById();
     }catch(e) {
       print("❌Error al agregar pago: $e");
     }
@@ -64,6 +65,7 @@ class PagoProvider extends ChangeNotifier {
       await pagoRepo.updatePago(pagoActualizado);
       notifyListeners();
       await cargarPagosClientePorId(idCliente);
+      await cargarPagosTodosById();
     } catch(e) {
       print("❌Error al actualizar pago: $e");
     }
@@ -73,7 +75,8 @@ class PagoProvider extends ChangeNotifier {
     try{
       await pagoRepo.deletePago(id);
       notifyListeners();
-      await cargarPagosClientePorId(idCliente);      
+      await cargarPagosClientePorId(idCliente);
+      await cargarPagosTodosById();      
     }catch(e) {
       print("❌ Error al eliminar pago: $e");
     }
@@ -82,7 +85,8 @@ class PagoProvider extends ChangeNotifier {
   //--------CARGAR ULTIMO PAGO POR CLIENTE
   Future<PagoModel?> obtenerUltimoPagoCliente(int idCliente) async {
     try {
-      return await pagoRepo.obtenerUltimoPago(idCliente);
+      //return await pagoRepo.obtenerUltimoPago(idCliente);
+      _ultimoPagoCliente = await pagoRepo.obtenerUltimoPago(idCliente);
     } catch(e) {
       print("❌ Error al obtener ultimo pago: $e");
       return null;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_gym_oficial/data/models/pago_model.dart';
 import 'package:my_gym_oficial/providers/cliente_provider.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/views/reportes/reportes_screen.dart';
@@ -8,8 +9,20 @@ import 'package:my_gym_oficial/widgets/ClienteScreen/form_agregar_editar_cliente
 import 'package:my_gym_oficial/widgets/ClienteScreen/my_toggle_buttons.dart';
 import 'package:provider/provider.dart';
 
-class ClientesScreen extends StatelessWidget {
+class ClientesScreen extends StatefulWidget {
   const ClientesScreen({super.key});
+
+  @override
+  State<ClientesScreen> createState() => _ClientesScreenState();
+}
+
+class _ClientesScreenState extends State<ClientesScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<PagoProvider>(context, listen: false).cargarPagosTodosById();
+  }
 
   @override
   Widget build(BuildContext context) {    
@@ -54,10 +67,8 @@ class ClientesScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20),
               margin: EdgeInsets.only(top: 10),
               width: double.infinity,
-              child: Consumer<ClienteProvider>(
-                builder: (context, clienteProvider, _) {
-
-                  
+              child: Consumer2<ClienteProvider, PagoProvider>(
+                builder: (context, clienteProvider, pagoProvider, _) {                  
                   
                   if(clienteProvider.clientes.isEmpty) {
                     return const Center(child: Text("No hay clientes registrados"),);
@@ -68,8 +79,15 @@ class ClientesScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final cliente = clienteProvider.clientes[index];
 
-                      final ultimoPago = Provider.of<PagoProvider>(context, listen: false)
-                    .obtenerUltimoPagoCliente(cliente.id!);
+                      final ultimoPago = pagoProvider.pagos.firstWhere(
+                        (pago) => pago.idCliente == cliente.id,
+                        orElse: () => PagoModel(
+                          idCliente: 100000, 
+                          montoPago: 0, 
+                          fechaPago: DateTime.now(), 
+                          proximaFechaPago: DateTime.now(), 
+                          tipoPago: "Ninguno"),
+                      );          
                   
                       return ClienteCard(cliente: cliente, ultimoPago: ultimoPago,);
                     }
