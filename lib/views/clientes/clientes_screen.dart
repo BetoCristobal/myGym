@@ -84,9 +84,9 @@ class _ClientesScreenState extends State<ClientesScreen> {
                         orElse: () => PagoModel(
                           idCliente: 100000, 
                           montoPago: 0, 
-                          fechaPago: DateTime.now(), 
-                          proximaFechaPago: DateTime.now(), 
-                          tipoPago: "Ninguno"),
+                          fechaPago: DateTime(1900), 
+                          proximaFechaPago: DateTime(1900), 
+                          tipoPago: "ninguno"),
                       );          
                   
                       return ClienteCard(cliente: cliente, ultimoPago: ultimoPago,);
