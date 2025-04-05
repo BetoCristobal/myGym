@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_gym_oficial/providers/cliente_provider.dart';
-import 'package:my_gym_oficial/providers/toggle_buttons_provider.dart';
 import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:provider/provider.dart';
 

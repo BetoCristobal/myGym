@@ -111,12 +111,15 @@ class ClienteProvider extends ChangeNotifier{
       break;
 
       case Opciones.urgentes:
+        _clientesFiltrados = _clientes.where((c) => c.estatus == "urgente").toList();
       break;
 
       case Opciones.proximos:
+        _clientesFiltrados = _clientes.where((c) => c.estatus == "proximo").toList();
       break;
 
       case Opciones.corrientes:
+        _clientesFiltrados = _clientes.where((c) => c.estatus == "corriente").toList();
       break;
     }
     notifyListeners();

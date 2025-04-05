@@ -1,7 +1,5 @@
-import 'package:my_gym_oficial/data/repositories/cliente_repository.dart';
 
 String asignarEstatus(int diasRestantes, int id) {
-  //final clienteRepo = ClienteRepository();
   String nuevoEstatus;
 
   if(diasRestantes < 0) {
@@ -14,6 +12,5 @@ String asignarEstatus(int diasRestantes, int id) {
     nuevoEstatus = "corriente";
   }
 
-  //clienteRepo.updateEstatusCliente(id, nuevoEstatus);
   return nuevoEstatus;
 }
