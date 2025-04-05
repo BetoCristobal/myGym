@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_gym_oficial/providers/cliente_provider.dart';
 import 'package:my_gym_oficial/providers/toggle_buttons_provider.dart';
 import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:provider/provider.dart';
@@ -9,9 +10,9 @@ class MyToggleButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final toggleProvider = Provider.of<ToggleButtonsProvider>(context);
+    final toggleProvider = Provider.of<ClienteProvider>(context);
 
-    return Consumer<ToggleButtonsProvider>(
+    return Consumer<ClienteProvider>(
               builder: (context, value, child) {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -43,7 +44,7 @@ class MyToggleButtons extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 11),
                           child: Text("Corrientes", style: TextStyles.textoToggleButtons,),
-                        ),                        
+                        ),
                       ],
                     ),
                   ),

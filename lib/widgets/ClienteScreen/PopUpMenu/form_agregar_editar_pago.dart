@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/data/models/pago_model.dart';
+import 'package:my_gym_oficial/providers/cliente_provider.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
+import 'package:my_gym_oficial/utils/asignar_estatus.dart';
+import 'package:my_gym_oficial/utils/calcular_dias_restantes.dart';
 import 'package:my_gym_oficial/utils/seleccionar_fecha.dart';
 import 'package:provider/provider.dart';
 
@@ -50,9 +53,12 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
     fechaProximoPago = widget.estaEditando == true ? widget.pagoEditar?.proximaFechaPago : null;
     */
   }
-
   @override
   Widget build(BuildContext context) {
+
+final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
+
+
     return IntrinsicHeight(
       child: Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -143,6 +149,9 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: ElevatedButton(
                     onPressed: () async {
+                      int diasRestantes = calcularDiasRestantes(fechaProximoPago!);
+                      String estatus = asignarEstatus(diasRestantes, widget.idCliente);                      
+
                       if(formKeyPagos.currentState!.validate() && fechaPago != null && fechaProximoPago != null && valorDropDownButton != null) {
                         final pagoProvider = Provider.of<PagoProvider>(context, listen: false);
                         if(widget.estaEditando == false) {
@@ -153,6 +162,7 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
                             fechaProximoPago!, 
                             valorDropDownButton!
                           );
+                          await clienteProvider.actualizarEstatusCliente(widget.idCliente, estatus);
                           Navigator.pop(context);
                         } else if(widget.estaEditando == true) {
                           await pagoProvider.actualizarPago(
@@ -163,6 +173,7 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
                             fechaProximoPago!, 
                             valorDropDownButton!
                           );
+                          await clienteProvider.actualizarEstatusCliente(widget.idCliente, estatus);
                           Navigator.pop(context);
                         }
                       } else {

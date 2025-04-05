@@ -31,7 +31,7 @@ class ClienteCard extends StatelessWidget {
     }
 
     int diasRestantes = calcularDiasRestantes(ultimoPago.proximaFechaPago);
-    String estatus = asignarEstatus(diasRestantes);
+    String estatus = asignarEstatus(diasRestantes, cliente.id!);
     LinearGradient fondoCard = asignarColorFondoCardCliente(estatus);
 
     return Card(
@@ -53,7 +53,7 @@ class ClienteCard extends StatelessWidget {
                         Text(ultimoPago != null ? "Próxima fecha de pago: ${txtProximaFechaPago}" : "Próxima fecha de pago: -", style: TextStyles.textoCardCliente),
                         Visibility(visible: ultimoPago.idCliente == 100000 ? false : true, 
                           child: Text('Días restantes: $diasRestantes', style: TextStyles.textoCardCliente)), 
-                        Text('Estatus: $estatus', style: TextStyles.textoCardCliente)
+                        Text('Estatus: ${cliente.estatus}', style: TextStyles.textoCardCliente)
                       ],
                     ),
                   

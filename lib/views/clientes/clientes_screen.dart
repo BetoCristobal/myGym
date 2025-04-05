@@ -75,9 +75,9 @@ class _ClientesScreenState extends State<ClientesScreen> {
                   }
             
                   return ListView.builder(
-                    itemCount: clienteProvider.clientes.length,
+                    itemCount: clienteProvider.clientesFiltrados.length,
                     itemBuilder: (context, index) {
-                      final cliente = clienteProvider.clientes[index];
+                      final cliente = clienteProvider.clientesFiltrados[index];
 
                       final ultimoPago = pagoProvider.pagos.firstWhere(
                         (pago) => pago.idCliente == cliente.id,

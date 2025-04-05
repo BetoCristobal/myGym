@@ -2,22 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/data/repositories/cliente_repository.dart';
 
+enum Opciones {todos, vencidos, urgentes, proximos, corrientes}
+
 class ClienteProvider extends ChangeNotifier{
   //Inyección de Dependencias:
   //Requiere que se pase una instancia de ClienteRepository al crear el Provider.
   final ClienteRepository clienteRepo;
 
   List<ClienteModel> _clientes = [];
+  List<ClienteModel> _clientesFiltrados = [];
+  
 
   ClienteProvider(this.clienteRepo) {
     cargarClientes();
   }
 
   List<ClienteModel> get clientes => _clientes;
+  List<ClienteModel> get clientesFiltrados => _clientesFiltrados;
+ 
 
   Future<void> cargarClientes() async {    
     try{      
       _clientes = await clienteRepo.getClientesOrdenadosById();
+      aplicarFiltro();
       notifyListeners();  
     } catch(e){
       print("❌ Error al cargar clientes: $e");
@@ -55,8 +62,18 @@ class ClienteProvider extends ChangeNotifier{
       await clienteRepo.updateCliente(clienteActualizado);      
       notifyListeners();
       await cargarClientes();
-     } catch(e) {
+    } catch(e) {
       print("❌ Error al actualizar cliente: $e");
+    }
+  }
+
+  Future<void> actualizarEstatusCliente(int id, String estatus) async {
+    try{
+      await clienteRepo.updateEstatusCliente(id, estatus);
+      notifyListeners();
+      await cargarClientes();
+    } catch(e){
+      print("❌ Error al actualizar ESTATUS: $e");
     }
   }
 
@@ -68,5 +85,40 @@ class ClienteProvider extends ChangeNotifier{
     } catch(e) {
       print("❌ Error al eliminar cliente: $e");
     }    
+  }
+
+  
+  Opciones opcionesView = Opciones.todos;
+  List<bool> isSelected = [true, false, false, false, false];
+
+  void toggleButton(int index){
+    for(int i = 0; i < isSelected.length; i++){
+      isSelected[i] = (i == index);
+    }
+    opcionesView = Opciones.values[index];
+    cargarClientes();
+    notifyListeners();
+  }
+
+  void aplicarFiltro() {
+    switch(opcionesView) {
+      case Opciones.todos:
+        _clientesFiltrados = List.from(_clientes);
+      break;
+
+      case Opciones.vencidos:
+        _clientesFiltrados = _clientes.where((c) => c.estatus == "vencido").toList();
+      break;
+
+      case Opciones.urgentes:
+      break;
+
+      case Opciones.proximos:
+      break;
+
+      case Opciones.corrientes:
+      break;
+    }
+    notifyListeners();
   }
 }

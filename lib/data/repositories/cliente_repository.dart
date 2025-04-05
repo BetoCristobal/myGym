@@ -60,6 +60,16 @@ class ClienteRepository {
     print("SE ACTUALIZO EL CLIENTE");
   }
 
+  Future<void> updateEstatusCliente(int id, String nuevoEstatus) async {
+    final db = await _dbHelper.database;
+    await db.update(
+      'clientes', 
+      {'estatus': nuevoEstatus},
+      where: 'id = ?',
+      whereArgs: [id]
+    );
+  }
+
 
   Future<void> deleteCliente(int id) async {
     final db= await _dbHelper.database;

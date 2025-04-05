@@ -1,12 +1,19 @@
-String asignarEstatus(int diasRestantes) {
+import 'package:my_gym_oficial/data/repositories/cliente_repository.dart';
+
+String asignarEstatus(int diasRestantes, int id) {
+  //final clienteRepo = ClienteRepository();
+  String nuevoEstatus;
 
   if(diasRestantes < 0) {
-    return "vencido";
+    nuevoEstatus = "vencido";
   } else if(diasRestantes >= 0 && diasRestantes < 1) {
-    return "urgente";
+    nuevoEstatus = "urgente";
   } else if(diasRestantes >= 1 && diasRestantes <= 3) {
-    return "proximo";
+    nuevoEstatus = "proximo";
   }else {
-    return "corriente";
+    nuevoEstatus = "corriente";
   }
+
+  //clienteRepo.updateEstatusCliente(id, nuevoEstatus);
+  return nuevoEstatus;
 }
