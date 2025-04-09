@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/data/models/pago_model.dart';
+import 'package:my_gym_oficial/providers/cliente_provider.dart';
 import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:my_gym_oficial/utils/asignar_color_fondo_card_cliente.dart';
 import 'package:my_gym_oficial/utils/asignar_estatus.dart';
@@ -10,6 +11,7 @@ import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_elim
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/form_agregar_editar_pago.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/ver_pagos.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/form_agregar_editar_cliente.dart';
+import 'package:provider/provider.dart';
 
 class ClienteCard extends StatelessWidget {
   final ClienteModel cliente;
@@ -32,7 +34,15 @@ class ClienteCard extends StatelessWidget {
 
     int diasRestantes = calcularDiasRestantes(ultimoPago.proximaFechaPago);
     String estatus = asignarEstatus(diasRestantes, cliente.id!);
+
+    if(cliente.estatus != estatus)  {
+      final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
+      clienteProvider.actualizarEstatusCliente(cliente.id!, estatus);
+    }
+    
     LinearGradient fondoCard = asignarColorFondoCardCliente(estatus);
+    
+    // TODO FALTA UNA FUNCION QUE REVISE EL DIAS RESTANTES Y ESTATUS PARA CONSTRUIR CARDS AL ABRIR APP
 
     return Card(
             clipBehavior: Clip.antiAlias,

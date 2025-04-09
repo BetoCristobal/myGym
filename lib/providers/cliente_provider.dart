@@ -11,6 +11,7 @@ class ClienteProvider extends ChangeNotifier{
 
   List<ClienteModel> _clientes = [];
   List<ClienteModel> _clientesFiltrados = [];
+  String _busqueda = "";
   
 
   ClienteProvider(this.clienteRepo) {
@@ -19,7 +20,7 @@ class ClienteProvider extends ChangeNotifier{
 
   List<ClienteModel> get clientes => _clientes;
   List<ClienteModel> get clientesFiltrados => _clientesFiltrados;
- 
+  String get busqueda => _busqueda;
 
   Future<void> cargarClientes() async {    
     try{      
@@ -123,5 +124,19 @@ class ClienteProvider extends ChangeNotifier{
       break;
     }
     notifyListeners();
+  }
+
+  void filtrarClientesPorNombresApellidos(String query) {
+    _busqueda = query;
+    if(query.isEmpty) {
+      aplicarFiltro();
+    } else {
+      final lowerCaseQuery = query.toLowerCase();
+      _clientesFiltrados = _clientesFiltrados.where((cliente) {
+        final nombreCompleto = '${cliente.nombres.toLowerCase()} ${cliente.apellidos.toLowerCase()}';
+        return nombreCompleto.contains(lowerCaseQuery);
+      }).toList();
+      notifyListeners();
+    }
   }
 }
