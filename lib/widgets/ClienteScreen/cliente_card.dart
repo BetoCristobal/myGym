@@ -9,6 +9,7 @@ import 'package:my_gym_oficial/utils/asignar_estatus.dart';
 import 'package:my_gym_oficial/utils/calcular_dias_restantes.dart';
 import 'package:my_gym_oficial/utils/enviar_whatsapp.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_eliminar_cliente.dart';
+import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_ver_informacion.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/form_agregar_editar_pago.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/ver_pagos.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/form_agregar_editar_cliente.dart';
@@ -73,6 +74,7 @@ class ClienteCard extends StatelessWidget {
                       onSelected: (value) {
                         switch(value) {
                           case 'ver_informacion':
+                            alertDialogVerInformacion(context, cliente);
                             break;  
                   
                           case 'realizar_pago':
@@ -111,7 +113,7 @@ class ClienteCard extends StatelessWidget {
                       itemBuilder: (BuildContext context) {
                         return [
                           PopupMenuItem(
-                            //value: ,
+                            value: "ver_informacion",
                             child: Text("Ver información")
                           ),
                           PopupMenuItem(
