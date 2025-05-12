@@ -7,6 +7,7 @@ import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:my_gym_oficial/utils/asignar_color_fondo_card_cliente.dart';
 import 'package:my_gym_oficial/utils/asignar_estatus.dart';
 import 'package:my_gym_oficial/utils/calcular_dias_restantes.dart';
+import 'package:my_gym_oficial/utils/enviar_whatsapp.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_eliminar_cliente.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/form_agregar_editar_pago.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/ver_pagos.dart';
@@ -89,6 +90,7 @@ class ClienteCard extends StatelessWidget {
                             break;
                   
                           case 'enviar_whatsapp':
+                            enviarWhatsapp(ultimoPago.proximaFechaPago, cliente.telefono);
                             break;
                   
                           case 'editar_cliente':
@@ -121,7 +123,7 @@ class ClienteCard extends StatelessWidget {
                             child: Text("Ver pagos")
                           ),
                           PopupMenuItem(
-                            //value: ,
+                            value: "enviar_whatsapp",
                             child: Text("Enviar WhatsApp")
                           ),
                           PopupMenuItem(
