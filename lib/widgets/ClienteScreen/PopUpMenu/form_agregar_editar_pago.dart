@@ -149,11 +149,13 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: ElevatedButton(
                     onPressed: () async {
-                      int diasRestantes = calcularDiasRestantes(fechaProximoPago!);
-                      String estatus = asignarEstatus(diasRestantes, widget.idCliente);                      
+                                            
 
                       if(formKeyPagos.currentState!.validate() && fechaPago != null && fechaProximoPago != null && valorDropDownButton != null) {
                         final pagoProvider = Provider.of<PagoProvider>(context, listen: false);
+                        int diasRestantes = calcularDiasRestantes(fechaProximoPago!);
+                         String estatus = asignarEstatus(diasRestantes, widget.idCliente);
+                         
                         if(widget.estaEditando == false) {
                           await pagoProvider.agregarPago(
                             widget.idCliente, 

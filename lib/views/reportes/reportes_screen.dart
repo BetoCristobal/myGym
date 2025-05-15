@@ -1,7 +1,11 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
+import 'package:my_gym_oficial/providers/reportes_provider.dart';
+import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/container_total_tipo_pago.dart';
+import 'package:my_gym_oficial/widgets/Reportes%20Screen/form_aplicar_filtros.dart';
 import 'package:provider/provider.dart';
 
 /*
@@ -15,16 +19,27 @@ context no está disponible fuera de build(), por eso la mejor práctica es
 usar StatefulWidget si necesitas hacer alguna inicialización.
 */
 
+class ReportesScreen extends StatefulWidget {
+  ReportesScreen({
+    super.key,
+  });
 
-class ReportesScreen extends StatelessWidget {
-  ReportesScreen({super.key,});
+  @override
+  State<ReportesScreen> createState() => _ReportesScreenState();
+}
+
+class _ReportesScreenState extends State<ReportesScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ReportesProvider>(context, listen: false).reiniciarFiltros();
+    //Provider.of<ReportesProvider>(context, listen: false).cargarReportes();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final reportesProvider = Provider.of<ReportesProvider>(context);
 
-    final pagoProvider = Provider.of<PagoProvider>(context, listen: false);
-    pagoProvider.cargarPagosTodosById();
-    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Reportes"),
@@ -32,81 +47,84 @@ class ReportesScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         iconTheme: IconThemeData(color: Colors.white),
         actions: [
-          IconButton(
-            onPressed: () {}, 
-            icon: Icon(Icons.restart_alt)
+          IconButton(onPressed: () {
+            Provider.of<ReportesProvider>(context, listen: false).reiniciarFiltros();}, icon: Icon(Icons.restart_alt)
           ),
-          
-          IconButton(
-            onPressed: () {}, 
-            icon: Icon(Icons.filter_alt_outlined)
-          )
+          IconButton(onPressed: () {
+            showModalBottomSheet(
+              context: context, 
+              builder: (BuildContext context) {
+                return FormAplicarFiltros();
+              }
+            );
+          }, icon: Icon(Icons.filter_alt_outlined))
         ],
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-
-          //Texto TOTAL - FECHAS - TIPO PAGO
-          Text("Total: \$ 21231213212"),
-
-          // TOTALES POR TIPO DE PAGO
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //crossAxisAlignment: CrossAxisAlignment.end, 
               children: [
-                ContainerTotalTipoPago(colorFondo: Colors.blue,),
-                ContainerTotalTipoPago(colorFondo: Colors.green,),
-                ContainerTotalTipoPago(colorFondo: Colors.red,),
-              ],
-            ),
-          ),
+                //Texto TOTAL - FECHAS - TIPO PAGO
+                Text(reportesProvider.txtFechaInicioFiltro == null 
+                  ? "Resultados no filtrados" 
+                  : "Del ${reportesProvider.txtFechaInicioFiltro} al ${reportesProvider.txtFechaFinFiltro}"),
+                Text("Total: \$ ${reportesProvider.sumaPagos.toStringAsFixed(2)}", style: TextStyles.textoTotal,),
 
-          //LISTVIEW PAGOS
-          Expanded(
-            child: Consumer<PagoProvider>(
-              builder: (context, pagoProvider, _) {
-                if(pagoProvider.pagos.isEmpty) {
-                  return const Center(child: Text("No hay pagos registrados"),);
-                }
-            
-                return ListView.builder(
-                  itemCount: pagoProvider.pagos.length,
-                  itemBuilder: (context, index) {
-            
-                    //OBTENEMOS EL NUMERO DE PAGO QUE SE MUESTRA EN #
-                    int numeroPago = pagoProvider.pagos.length - index;
-            
-                    final pago = pagoProvider.pagos[index];
-                    String txtFechaPago = DateFormat("dd-MM-yyyy").format(pago.fechaPago);
-            
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        //#
-                        Text(("$numeroPago")),
+                // TOTALES POR TIPO DE PAGO
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ContainerTotalTipoPago(
+                        tipoPago: "Efectivo",
+                        totalPorTipo: reportesProvider.totalEfectivo,
+                        porcentaje: reportesProvider.porcentajeEfectivo, 
+                        colorFondo: Colors.blue,
+                      ),
+                      ContainerTotalTipoPago(
+                        tipoPago: "Transferencia", 
+                        totalPorTipo: reportesProvider.totalTransferencia,
+                        porcentaje: reportesProvider.porcentajeTransferencia, 
+                        colorFondo: Colors.green,
+                      ),
+                      ContainerTotalTipoPago(
+                        tipoPago: "Tarjeta",
+                        totalPorTipo: reportesProvider.totalTarjeta,
+                        porcentaje: reportesProvider.porcentajeTarjeta,  
+                        colorFondo: Colors.red,
+                      ),
+                    ],
+                  ),
+                ),
+
+                Expanded(
+                  child: DataTable2(
+                    columnSpacing: 10,
+                    horizontalMargin: 12,
+                    minWidth: 450,
+                    columns: [
+                      //DataColumn(label: Text("#")),
+                      DataColumn2(label: Text("Cliente:")),
+                      DataColumn2(label: Text("Fecha:"), ),
+                      DataColumn2(label: Text("Monto:"), size: ColumnSize.S),
+                      DataColumn2(label: Text("Tipo:"),),
+                    ], 
+                    rows: reportesProvider.reportesMostrar.map((reporte) {
                       
-                        //FECHA PAGO
-                        Text(txtFechaPago),
-            
-                        //MONTO
-                        Text((pago.montoPago).toString()),
-            
-                        //TIPO PAGO
-                        Text(pago.tipoPago),
-
-                        //NOMBRES CLIENTE
-                        Text("Pedro Alberto"),
-                      ],
-                    );
-                  },
-                );
-              }
-            ),
-          ),
-        ],
-      ),
+                      final txtFechaPago = DateFormat("dd-MM-yyyy").format(reporte.fechaPago);
+                      return DataRow(
+                        cells: [
+                          DataCell(Text("${reporte.nombreCliente}")),
+                          DataCell(Text("${txtFechaPago}")),
+                          DataCell(Text("\$${reporte.montoPago}")),
+                          DataCell(Text("${reporte.tipoPago}")),
+                        ]
+                      );
+                    }).toList()
+                  ),
+                ),
+              ]
+            )
     );
-  }
+  }     
 }

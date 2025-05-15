@@ -3,6 +3,7 @@ import 'package:my_gym_oficial/data/repositories/cliente_repository.dart';
 import 'package:my_gym_oficial/data/repositories/pago_repository.dart';
 import 'package:my_gym_oficial/providers/cliente_provider.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
+import 'package:my_gym_oficial/providers/reportes_provider.dart';
 import 'package:my_gym_oficial/providers/toggle_buttons_provider.dart';
 import 'package:my_gym_oficial/views/clientes/clientes_screen.dart';
 import 'package:my_gym_oficial/views/reportes/reportes_screen.dart';
@@ -16,6 +17,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => ToggleButtonsProvider()),
         ChangeNotifierProvider(create: (_) => ClienteProvider(ClienteRepository())),
         ChangeNotifierProvider(create: (_) => PagoProvider(PagoRepository())), 
+        ChangeNotifierProvider(create: (_) => ReportesProvider(PagoRepository(), ClienteRepository())), 
       ],
       child: MyApp(),
     )

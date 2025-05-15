@@ -7,6 +7,12 @@ void alertDialogVerInformacion(BuildContext context, ClienteModel cliente) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text("${cliente.nombres} ${cliente.apellidos}"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("Teléfono: ${cliente.telefono}")
+          ],
+        ),
       );
     }
   );

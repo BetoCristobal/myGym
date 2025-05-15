@@ -7,6 +7,7 @@ environment:
   sdk: ^3.6.2
 
 dependencies:
+  data_table_2: ^2.6.0
   flutter:
     sdk: flutter
   intl: ^0.20.2

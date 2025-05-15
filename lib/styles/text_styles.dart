@@ -11,4 +11,10 @@ class TextStyles {
     fontWeight: FontWeight.bold,
     color: Colors.white
   );
+
+  static const TextStyle textoTotal = TextStyle(
+    fontSize: 25,
+    fontWeight: FontWeight.bold,
+    color: Colors.black
+  );
 }

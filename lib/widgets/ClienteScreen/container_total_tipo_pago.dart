@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ContainerTotalTipoPago extends StatelessWidget {
+  final String tipoPago;
+  final double totalPorTipo;
+  final double porcentaje;
   final Color colorFondo;
 
-  ContainerTotalTipoPago({super.key, required this.colorFondo});
+  ContainerTotalTipoPago({super.key, required this.tipoPago, required this.totalPorTipo, required this.porcentaje, required this.colorFondo});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +19,9 @@ class ContainerTotalTipoPago extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text("Tipo pago", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                Text("\$ 21212122", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
+                Text("$tipoPago:", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                Text("\$ $totalPorTipo", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                Text("${porcentaje.toStringAsFixed(2)}%", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
               ],
             ),
           );
