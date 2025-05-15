@@ -146,6 +146,7 @@ class ReportesProvider extends ChangeNotifier{
       _sumaTotal = _reportesFiltrados.fold<double>(0, (suma, item) => suma += item.montoPago);
 
       _reportesMostrar = _reportesFiltrados;
+      clasificarPagosPorTipoFiltrados();
       notifyListeners();
     }catch (e) {
       print('❌ Error al filtrar reportes: $e');
@@ -158,4 +159,65 @@ class ReportesProvider extends ChangeNotifier{
     cargarReportes();
   }
 
+  void clasificarPagosPorTipoFiltrados() {
+    //Limpiar listas
+    _pagosEfectivo = [];
+    _pagosTransferencia = [];
+    _pagosTarjeta = [];
+
+    _totalEfectivo = 0;
+    _totalTransferencia = 0;
+    _totalTarjeta = 0;
+
+    for(var reporte in _reportesFiltrados) {
+      switch(reporte.tipoPago.toLowerCase()) {
+        case 'efectivo':
+          _pagosEfectivo.add(reporte);
+          _totalEfectivo += reporte.montoPago;
+          break;
+
+        case 'transferencia':
+          _pagosTransferencia.add(reporte);
+          _totalTransferencia += reporte.montoPago;
+          break;
+        
+        case 'tarjeta':
+          _pagosTarjeta.add(reporte);
+          _totalTarjeta += reporte.montoPago;
+          break;
+      }
+    }
+
+    if(_sumaTotal > 0) {
+      _porcentajeEfectivo = (_totalEfectivo / _sumaTotal) * 100;
+      _porcentajeTransferencia = (_totalTransferencia / _sumaTotal) * 100;
+      _porcentajeTarjeta = (_totalTarjeta / _sumaTotal) * 100;
+    } else {
+      _porcentajeEfectivo = 0;
+      _porcentajeTransferencia = 0;
+      _porcentajeTarjeta = 0;
+    }
+    notifyListeners();
+  }
+
+  Future<void> cargarReportesFiltradosTodosPorFecha(DateTime fechaInicio, DateTime fechaFin) async {
+    try {
+      txtFechaInicioFiltro = DateFormat('dd-MM-yyyy').format(fechaInicio);
+      txtFechaFinFiltro = DateFormat('dd-MM-yyyy').format(fechaFin);
+
+      _reportesFiltrados = _reportes.where((reporte) {
+        final rango = reporte.fechaPago.isAfter(fechaInicio.subtract(Duration(seconds: 1))) && 
+                      reporte.fechaPago.isBefore(fechaFin.add(Duration(days: 1)));
+        return rango;
+      }).toList();
+
+      _sumaTotal = _reportesFiltrados.fold<double>(0, (suma, item) => suma += item.montoPago);
+
+      _reportesMostrar = _reportesFiltrados;
+      clasificarPagosPorTipoFiltrados();
+      notifyListeners();
+    }catch (e) {
+      print('❌ Error al filtrar reportes: $e');
+    }
+  }
 }

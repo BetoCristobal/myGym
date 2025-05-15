@@ -15,7 +15,7 @@ class _FormAplicarFiltrosState extends State<FormAplicarFiltros> {
 
   final GlobalKey<FormState> formFiltro = GlobalKey<FormState>();
 
-  final List<String> options = ['Efectivo', 'Tarjeta', 'Transferencia'];
+  final List<String> options = ['Todos', 'Efectivo', 'Tarjeta', 'Transferencia'];
   String? valorDropDownButton;
 
   DateTime? fechaInicio;
@@ -106,8 +106,13 @@ class _FormAplicarFiltrosState extends State<FormAplicarFiltros> {
                   onPressed: () {
                     if(fechaInicio != null && fechaFin != null && valorDropDownButton != null) {
                       print("FILTROS APLICADOS");
-                      Provider.of<ReportesProvider>(context, listen: false).cargarReportesFiltrados(valorDropDownButton!, fechaInicio!, fechaFin!);
-                      Navigator.pop(context);
+                      if(valorDropDownButton == "Todos") {
+                        Provider.of<ReportesProvider>(context, listen: false).cargarReportesFiltradosTodosPorFecha(fechaInicio!, fechaFin!);
+                        Navigator.pop(context);
+                      } else {
+                        Provider.of<ReportesProvider>(context, listen: false).cargarReportesFiltrados(valorDropDownButton!, fechaInicio!, fechaFin!);
+                       Navigator.pop(context);
+                      }                      
                     } else {
                       showDialog(
                         context: context, 
