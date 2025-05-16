@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/data/models/pago_model.dart';
 import 'package:my_gym_oficial/providers/cliente_provider.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
+import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:my_gym_oficial/utils/asignar_estatus.dart';
 import 'package:my_gym_oficial/utils/calcular_dias_restantes.dart';
 import 'package:my_gym_oficial/utils/seleccionar_fecha.dart';
@@ -68,13 +69,19 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                Text(widget.estaEditando == false ? "Realizar pago:" : "Actualizar último pago:"),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(widget.estaEditando == false 
+                  ? "Realizar pago:" 
+                  : "Actualizar último pago:", style: TextStyles.tituloShowModal, ),
+                ),
             
                 //CAMPO MONTO
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 15),
                   child: TextFormField(
                     controller: montoController,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(labelText: "Monto"),
                     validator: (value) =>
                       value == null || value.isEmpty ? "Ingrese monto" : null,
@@ -154,8 +161,8 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                       if(formKeyPagos.currentState!.validate() && fechaPago != null && fechaProximoPago != null && valorDropDownButton != null) {
                         final pagoProvider = Provider.of<PagoProvider>(context, listen: false);
                         int diasRestantes = calcularDiasRestantes(fechaProximoPago!);
-                         String estatus = asignarEstatus(diasRestantes, widget.idCliente);
-                         
+                        String estatus = asignarEstatus(diasRestantes, widget.idCliente);
+                      
                         if(widget.estaEditando == false) {
                           await pagoProvider.agregarPago(
                             widget.idCliente, 

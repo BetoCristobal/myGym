@@ -126,15 +126,30 @@ class ClienteProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  String normalizar(String texto) {
+    final withTilde = texto.toLowerCase();
+    const acentos = 'áéíóúüñ';
+    const sinAcentos = 'aeiouun';
+
+    String result = '';
+    for (int i = 0; i < withTilde.length; i++) {
+      int index = acentos.indexOf(withTilde[i]);
+      result += (index >= 0) ? sinAcentos[index] : withTilde[i];
+    }
+    return result;
+  }
+
   void filtrarClientesPorNombresApellidos(String query) {
     _busqueda = query;
     if(query.isEmpty) {
       aplicarFiltro();
     } else {
       final lowerCaseQuery = query.toLowerCase();
-      _clientesFiltrados = _clientesFiltrados.where((cliente) {
-        final nombreCompleto = '${cliente.nombres.toLowerCase()} ${cliente.apellidos.toLowerCase()}';
-        return nombreCompleto.contains(lowerCaseQuery);
+      final listaBase = _clientes;
+      _clientesFiltrados = listaBase.where((cliente) {
+        final nombreCompleto = normalizar('${cliente.nombres} ${cliente.apellidos}');
+        final consulta = normalizar(query);
+        return nombreCompleto.contains(consulta);
       }).toList();
       notifyListeners();
     }

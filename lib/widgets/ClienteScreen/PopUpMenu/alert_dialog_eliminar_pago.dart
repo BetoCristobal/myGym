@@ -16,7 +16,7 @@ void AlertDialogEliminarPago(BuildContext context, int idPago, int idCliente) {
               await pagoProvider.eliminarPago(idPago, idCliente);
               Navigator.pop(context);
             }, 
-              child: Text("ELiminar")),
+              child: Text("Eliminar")),
             ElevatedButton(onPressed: () {Navigator.pop(context);}, child: Text("Cancelar"))
           ],
         ),

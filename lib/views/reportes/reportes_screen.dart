@@ -67,6 +67,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
                 Text(reportesProvider.txtFechaInicioFiltro == null 
                   ? "Resultados no filtrados" 
                   : "Del ${reportesProvider.txtFechaInicioFiltro} al ${reportesProvider.txtFechaFinFiltro}"),
+                  Text("Tipo de pago: ${reportesProvider.txtTipoPago}"),
                 Text("Total: \$ ${reportesProvider.sumaPagos.toStringAsFixed(2)}", style: TextStyles.textoTotal,),
 
                 // TOTALES POR TIPO DE PAGO

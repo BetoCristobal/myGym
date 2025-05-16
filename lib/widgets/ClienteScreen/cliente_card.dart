@@ -57,16 +57,21 @@ class ClienteCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [                  
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("${cliente.id}.- ${cliente.nombres} ${cliente.apellidos}", style: TextStyles.textoCardCliente),
-                        Text(ultimoPago != null ? "Fecha de pago: ${txtFechaPago}" : "Fecha de pago: -", style: TextStyles.textoCardCliente),
-                        Text(ultimoPago != null ? "Próxima fecha de pago: ${txtProximaFechaPago}" : "Próxima fecha de pago: -", style: TextStyles.textoCardCliente),
-                        Visibility(visible: ultimoPago.idCliente == 100000 ? false : true, 
-                          child: Text('Días restantes: $diasRestantes', style: TextStyles.textoCardCliente)), 
-                        Text('Estatus: ${cliente.estatus}', style: TextStyles.textoCardCliente)
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("${cliente.nombres} ${cliente.apellidos}", 
+                            style: TextStyles.textoCardCliente,
+                            
+                          ),
+                          Text(ultimoPago != null ? "Fecha de pago: ${txtFechaPago}" : "Fecha de pago: -", style: TextStyles.textoCardCliente),
+                          Text(ultimoPago != null ? "Próx. fecha de pago: ${txtProximaFechaPago}" : "Próxima fecha de pago: -", style: TextStyles.textoCardCliente),
+                          Visibility(visible: ultimoPago.idCliente == 100000 ? false : true, 
+                            child: Text('Días restantes: $diasRestantes', style: TextStyles.textoCardCliente)), 
+                          Text('Estatus: ${cliente.estatus}', style: TextStyles.textoCardCliente)
+                        ],
+                      ),
                     ),
                   
                     PopupMenuButton(

@@ -18,7 +18,7 @@ void AlertDialogEliminarCliente(BuildContext context, int id) {
               await clienteProvider.eliminarCliente(id);
               Navigator.pop(context);
             }, 
-              child: Text("ELiminar")),
+              child: Text("Eliminar")),
             ElevatedButton(onPressed: () {Navigator.pop(context);}, child: Text("Cancelar"))
           ],
         ),

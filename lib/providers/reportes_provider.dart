@@ -48,6 +48,7 @@ class ReportesProvider extends ChangeNotifier{
 
   String? txtFechaInicioFiltro;
   String? txtFechaFinFiltro;  
+  String? txtTipoPago;
 
   //------------CARGAR TODOS REPORTES----------
   
@@ -134,6 +135,8 @@ class ReportesProvider extends ChangeNotifier{
       txtFechaInicioFiltro = DateFormat('dd-MM-yyyy').format(fechaInicio);
       txtFechaFinFiltro = DateFormat('dd-MM-yyyy').format(fechaFin);
 
+      txtTipoPago = tipoPago;
+
       final tipoPagoFiltrado = tipoPago.toLowerCase();
 
       _reportesFiltrados = _reportes.where((reporte) {
@@ -156,6 +159,7 @@ class ReportesProvider extends ChangeNotifier{
   void reiniciarFiltros() {
     txtFechaInicioFiltro = null;
     txtFechaFinFiltro = null;
+    txtTipoPago = "Todos";
     cargarReportes();
   }
 
@@ -204,6 +208,7 @@ class ReportesProvider extends ChangeNotifier{
     try {
       txtFechaInicioFiltro = DateFormat('dd-MM-yyyy').format(fechaInicio);
       txtFechaFinFiltro = DateFormat('dd-MM-yyyy').format(fechaFin);
+      txtTipoPago = 'Todos';
 
       _reportesFiltrados = _reportes.where((reporte) {
         final rango = reporte.fechaPago.isAfter(fechaInicio.subtract(Duration(seconds: 1))) && 

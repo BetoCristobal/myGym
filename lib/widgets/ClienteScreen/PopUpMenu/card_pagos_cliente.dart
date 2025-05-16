@@ -30,15 +30,42 @@ class CardPagosCliente extends StatelessWidget {
             children: [
               //# PAGO
               Center(child: Text("$numeroPago"),),
+
+              Expanded(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text("Fecha pago:"),
+                        Text("Próx. pago:"),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text("${txtFechaPago}"),                  
+                        Text("${txtFechaProximoPago}")
+                      ],
+                    ),
+                
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text("\$${pago.montoPago}"),
+                        Text("${pago.tipoPago}")
+                      ],
+                    ),
+                  ],
+                ),
+              ),
           
               //DATOS FECHAS PAGO
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Fecha pago:"),
-                  Text("${txtFechaPago}"),
-                  Text("Próximio pago:"),
-                  Text("${txtFechaProximoPago}")
+                  
+                  
                 ],
               ),
           
@@ -48,8 +75,7 @@ class CardPagosCliente extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("\$${pago.montoPago}"),
-                  Text("${pago.tipoPago}")
+                  
                 ],
               ),
           
@@ -70,7 +96,7 @@ class CardPagosCliente extends StatelessWidget {
                           }
                         );
                       break;
-
+          
                     case "eliminar_pago":
                       AlertDialogEliminarPago(context, pago.id!, cliente.id!);
                       break;

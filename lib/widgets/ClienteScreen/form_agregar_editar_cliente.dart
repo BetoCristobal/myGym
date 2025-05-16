@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
+import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:provider/provider.dart';
 import '../../providers/cliente_provider.dart';
 
@@ -47,7 +49,12 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
             child: Column(
               children: [
                 // TITULO
-                Text(widget.estaEditando == false ? "Agregar cliente" : "Editar cliente"),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(widget.estaEditando == false 
+                  ? "Agregar cliente" 
+                  : "Editar cliente", style: TextStyles.tituloShowModal, ),
+                ),
             
                 // CAMPO NOMBRES
                 Container(
@@ -76,9 +83,20 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                   margin: EdgeInsets.symmetric(vertical: 15),
                   child: TextFormField(
                     controller: telefonoController,
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(labelText: "Teléfono"),
-                    validator: (value) => 
-                      value == null || value.isEmpty ? "Ingrese teléfono" : null,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(10),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    validator: (value) {
+                      if(value == null || value.isEmpty) {
+                        return "Ingrese teléfono";
+                      } else if(value.length != 10) {
+                        return "Ingrese un numero con 10 dígitos";
+                      }
+                      return null;
+                    }
                   ),
                 ),
             

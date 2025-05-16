@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/providers/reportes_provider.dart';
+import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:my_gym_oficial/utils/seleccionar_fecha.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,10 @@ class _FormAplicarFiltrosState extends State<FormAplicarFiltros> {
           key: formFiltro,
           child: Column(
             children: [
-              Text("Aplicar filtro:"),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text("Aplicar filtro:", style: TextStyles.tituloShowModal,  ),
+              ),
 
               //LISTA DROPDOWN
               Container(

@@ -17,4 +17,10 @@ class TextStyles {
     fontWeight: FontWeight.bold,
     color: Colors.black
   );
+  
+  static const TextStyle tituloShowModal = TextStyle(
+    fontSize: 23,
+    fontWeight: FontWeight.bold,
+    color: Colors.black
+  );
 }
