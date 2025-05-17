@@ -7,6 +7,7 @@ import 'package:my_gym_oficial/providers/reportes_provider.dart';
 import 'package:my_gym_oficial/providers/toggle_buttons_provider.dart';
 import 'package:my_gym_oficial/views/clientes/clientes_screen.dart';
 import 'package:my_gym_oficial/views/reportes/reportes_screen.dart';
+import 'package:my_gym_oficial/views/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => ClientesScreen(),
+        "/": (context) => SplashScreen(),
+        "clientesScreen": (context) => ClientesScreen(),
         "reportesScreen": (context) => ReportesScreen(),
       },
     );

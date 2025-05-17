@@ -1,7 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/providers/reportes_provider.dart';
 import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/container_total_tipo_pago.dart';
@@ -66,8 +65,8 @@ class _ReportesScreenState extends State<ReportesScreen> {
                 //Texto TOTAL - FECHAS - TIPO PAGO
                 Text(reportesProvider.txtFechaInicioFiltro == null 
                   ? "Resultados no filtrados" 
-                  : "Del ${reportesProvider.txtFechaInicioFiltro} al ${reportesProvider.txtFechaFinFiltro}"),
-                  Text("Tipo de pago: ${reportesProvider.txtTipoPago}"),
+                  : "Del  ${reportesProvider.txtFechaInicioFiltro}  al  ${reportesProvider.txtFechaFinFiltro}", style: TextStyles.textoFiltros),
+                  Text("Tipo de pago: ${reportesProvider.txtTipoPago}", style: TextStyles.textoFiltros,),
                 Text("Total: \$ ${reportesProvider.sumaPagos.toStringAsFixed(2)}", style: TextStyles.textoTotal,),
 
                 // TOTALES POR TIPO DE PAGO

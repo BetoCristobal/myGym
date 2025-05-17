@@ -144,7 +144,7 @@ class ClienteProvider extends ChangeNotifier{
     if(query.isEmpty) {
       aplicarFiltro();
     } else {
-      final lowerCaseQuery = query.toLowerCase();
+      //final lowerCaseQuery = query.toLowerCase();
       final listaBase = _clientes;
       _clientesFiltrados = listaBase.where((cliente) {
         final nombreCompleto = normalizar('${cliente.nombres} ${cliente.apellidos}');

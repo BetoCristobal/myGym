@@ -44,8 +44,6 @@ class ClienteCard extends StatelessWidget {
     
     LinearGradient fondoCard = asignarColorFondoCardCliente(estatus);
     
-    // TODO FALTA UNA FUNCION QUE REVISE EL DIAS RESTANTES Y ESTATUS PARA CONSTRUIR CARDS AL ABRIR APP
-
     return Card(
             clipBehavior: Clip.antiAlias,
             child: Container(

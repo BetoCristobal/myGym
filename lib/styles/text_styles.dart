@@ -23,4 +23,10 @@ class TextStyles {
     fontWeight: FontWeight.bold,
     color: Colors.black
   );
+
+  static const TextStyle textoFiltros = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: Colors.black
+  );
 }
