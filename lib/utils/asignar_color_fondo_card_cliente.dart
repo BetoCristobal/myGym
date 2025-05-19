@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-LinearGradient asignarColorFondoCardCliente(String estatus) {
-
-  LinearGradient gradient;
-  
+LinearGradient asignarColorFondoCardCliente(String estatus) {  
   late Color color1 = Colors.white;
   late Color color2 = Colors.white;
 
@@ -30,7 +27,7 @@ LinearGradient asignarColorFondoCardCliente(String estatus) {
   } 
 
   
-  return gradient = LinearGradient(
+  return LinearGradient(
     colors: [color1, color2],
     begin: Alignment.topLeft, 
     end: Alignment.bottomRight
