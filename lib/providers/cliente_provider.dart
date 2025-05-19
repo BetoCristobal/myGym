@@ -43,7 +43,7 @@ class ClienteProvider extends ChangeNotifier{
       );
       await clienteRepo.insertCliente(nuevoCliente);
       print("Se agrego cliente a la BD ${nuevoCliente}");
-      notifyListeners();
+      //notifyListeners();
       await cargarClientes();
 
     }catch(e) {
@@ -61,7 +61,7 @@ class ClienteProvider extends ChangeNotifier{
         estatus: estatus
       );
       await clienteRepo.updateCliente(clienteActualizado);      
-      notifyListeners();
+      //notifyListeners();
       await cargarClientes();
     } catch(e) {
       print("❌ Error al actualizar cliente: $e");
@@ -71,7 +71,7 @@ class ClienteProvider extends ChangeNotifier{
   Future<void> actualizarEstatusCliente(int id, String estatus) async {
     try{
       await clienteRepo.updateEstatusCliente(id, estatus);
-      notifyListeners();
+      //notifyListeners();
       await cargarClientes();
     } catch(e){
       print("❌ Error al actualizar ESTATUS: $e");
@@ -81,7 +81,7 @@ class ClienteProvider extends ChangeNotifier{
   Future<void> eliminarCliente(int id) async {
     try{
       await clienteRepo.deleteCliente(id);
-      notifyListeners();
+      //notifyListeners();
       await cargarClientes();
     } catch(e) {
       print("❌ Error al eliminar cliente: $e");

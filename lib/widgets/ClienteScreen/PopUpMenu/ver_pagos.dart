@@ -13,7 +13,7 @@ void VerPagos(BuildContext context, ClienteModel cliente) async {
     context: context, 
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Pagos de ${cliente.nombres} ${cliente.apellidos}"), //TODO necesitamos nombre cliente
+        title: Text("Pagos de ${cliente.nombres} ${cliente.apellidos}"), 
         content: SizedBox(
           width: double.maxFinite,
           child: Expanded(
