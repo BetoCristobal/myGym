@@ -42,7 +42,7 @@ class _ClientesScreenState extends State<ClientesScreen> {
             IconButton(onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => ReportesScreen()));
             }, 
-            icon: Icon(Icons.bar_chart), color: Colors.white,),
+            icon: const Icon(Icons.bar_chart), color: Colors.white,),
             IconButton(onPressed: () {
               showModalBottomSheet(
                 isScrollControlled: true,
@@ -52,7 +52,7 @@ class _ClientesScreenState extends State<ClientesScreen> {
                 }
               );
             }, 
-            icon: Icon(Icons.person_add), color: Colors.white,)
+            icon: const Icon(Icons.person_add), color: Colors.white,)
           ],
           titleTextStyle: TextStyle(fontSize: 23, color: Colors.white),
           backgroundColor: Colors.black,

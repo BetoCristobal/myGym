@@ -7,7 +7,7 @@ void AlertDialogEliminarPago(BuildContext context, int idPago, int idCliente) {
     context: context, 
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("¿Desea eliminar pago?"),
+        title: const Text("¿Desea eliminar pago?"),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -17,7 +17,7 @@ void AlertDialogEliminarPago(BuildContext context, int idPago, int idCliente) {
               Navigator.pop(context);
             }, 
               child: Text("Eliminar")),
-            ElevatedButton(onPressed: () {Navigator.pop(context);}, child: Text("Cancelar"))
+            ElevatedButton(onPressed: () {Navigator.pop(context);}, child: const Text("Cancelar"))
           ],
         ),
       );

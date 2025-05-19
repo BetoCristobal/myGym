@@ -85,8 +85,8 @@ class PagoProvider extends ChangeNotifier {
   //--------CARGAR ULTIMO PAGO POR CLIENTE
   Future<PagoModel?> obtenerUltimoPagoCliente(int idCliente) async {
     try {
-      //return await pagoRepo.obtenerUltimoPago(idCliente);
       _ultimoPagoCliente = await pagoRepo.obtenerUltimoPago(idCliente);
+      return _ultimoPagoCliente; 
     } catch(e) {
       print("❌ Error al obtener ultimo pago: $e");
       return null;

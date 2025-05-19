@@ -47,12 +47,6 @@ class _FormAgregarEditarPagoState extends State<FormAgregarEditarPago> {
       txtFechaPago = DateFormat("dd-MM-yyyy").format(fechaPago!);
       txtFechaProximoPago = DateFormat("dd-MM-yyyy").format(fechaProximoPago!);
     }
-    /*
-    montoController = TextEditingController(
-      text: widget.estaEditando == true ? widget.pagoEditar?.montoPago.toString() : "");
-    fechaPago = widget.estaEditando == true ? widget.pagoEditar?.fechaPago : null;
-    fechaProximoPago = widget.estaEditando == true ? widget.pagoEditar?.proximaFechaPago : null;
-    */
   }
   @override
   Widget build(BuildContext context) {
@@ -116,7 +110,7 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                       //FECHA PAGO
                       Column(
                         children: [
-                          Text("Fecha de pago:"),                          
+                          const Text("Fecha de pago:"),                          
                           ElevatedButton(
                             onPressed: () async {
                               fechaPago = await seleccionarFecha(context);
@@ -134,7 +128,7 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                       //FECHA PROXIMO PAGO
                       Column(
                         children: [
-                          Text("Próximo pago:"),                              
+                          const Text("Próximo pago:"),                              
                           ElevatedButton(
                             onPressed: () async {
                               fechaProximoPago = await seleccionarFecha(context);
@@ -190,8 +184,8 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                           context: context, 
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text("Advertencia:"),
-                              content: Text("Debe ingresar monto, tipo de pago y fechas.")
+                              title: const Text("Advertencia:"),
+                              content: const Text("Debe ingresar monto, tipo de pago y fechas.")
                             );
                           }
                         );

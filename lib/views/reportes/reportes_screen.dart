@@ -32,7 +32,6 @@ class _ReportesScreenState extends State<ReportesScreen> {
   void initState() {
     super.initState();
     Provider.of<ReportesProvider>(context, listen: false).reiniciarFiltros();
-    //Provider.of<ReportesProvider>(context, listen: false).cargarReportes();
   }
 
   @override
@@ -47,7 +46,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
         iconTheme: IconThemeData(color: Colors.white),
         actions: [
           IconButton(onPressed: () {
-            Provider.of<ReportesProvider>(context, listen: false).reiniciarFiltros();}, icon: Icon(Icons.restart_alt)
+            Provider.of<ReportesProvider>(context, listen: false).reiniciarFiltros();}, icon: const Icon(Icons.restart_alt)
           ),
           IconButton(onPressed: () {
             showModalBottomSheet(
@@ -56,7 +55,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
                 return FormAplicarFiltros();
               }
             );
-          }, icon: Icon(Icons.filter_alt_outlined))
+          }, icon: const Icon(Icons.filter_alt_outlined))
         ],
       ),
       body: Column(
@@ -114,10 +113,10 @@ class _ReportesScreenState extends State<ReportesScreen> {
                       final txtFechaPago = DateFormat("dd-MM-yyyy").format(reporte.fechaPago);
                       return DataRow(
                         cells: [
-                          DataCell(Text("${reporte.nombreCliente}")),
-                          DataCell(Text("${txtFechaPago}")),
+                          DataCell(Text(reporte.nombreCliente)),
+                          DataCell(Text(txtFechaPago)),
                           DataCell(Text("\$${reporte.montoPago}")),
-                          DataCell(Text("${reporte.tipoPago}")),
+                          DataCell(Text(reporte.tipoPago)),
                         ]
                       );
                     }).toList()

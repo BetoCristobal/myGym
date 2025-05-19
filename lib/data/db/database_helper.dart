@@ -6,10 +6,6 @@ class DatabaseHelper {
 
   static Database? _database;
 
-  //CONSTRUCTOR PARA SINGLENTON
-  //static final DatabaseHelper instance = DatabaseHelper._internal();
-  //DatabaseHelper._internal(); // SE USA PARA QUE LA CLASE SOLO TENGA UNA INSTANCIA EN TODA LA APP
-
   Future<Database> get database async {
     if(_database != null) return _database!;
     _database = await _initDatabase();

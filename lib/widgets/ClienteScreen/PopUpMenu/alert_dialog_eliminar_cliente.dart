@@ -9,7 +9,7 @@ void AlertDialogEliminarCliente(BuildContext context, int id) {
     context: context, 
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("¿Desea eliminar cliente?"),
+        title: const Text("¿Desea eliminar cliente?"),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -18,8 +18,8 @@ void AlertDialogEliminarCliente(BuildContext context, int id) {
               await clienteProvider.eliminarCliente(id);
               Navigator.pop(context);
             }, 
-              child: Text("Eliminar")),
-            ElevatedButton(onPressed: () {Navigator.pop(context);}, child: Text("Cancelar"))
+              child: const Text("Eliminar")),
+            ElevatedButton(onPressed: () {Navigator.pop(context);}, child: const Text("Cancelar"))
           ],
         ),
       );

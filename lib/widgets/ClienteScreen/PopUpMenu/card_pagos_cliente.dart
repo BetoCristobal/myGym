@@ -36,7 +36,7 @@ class CardPagosCliente extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
+                      children: const [
                         Text("Fecha pago:"),
                         Text("Próx. pago:"),
                       ],
@@ -44,8 +44,8 @@ class CardPagosCliente extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text("${txtFechaPago}"),                  
-                        Text("${txtFechaProximoPago}")
+                        Text(txtFechaPago),                  
+                        Text(txtFechaProximoPago)
                       ],
                     ),
                 
@@ -53,31 +53,12 @@ class CardPagosCliente extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text("\$${pago.montoPago}"),
-                        Text("${pago.tipoPago}")
+                        Text(pago.tipoPago)
                       ],
                     ),
                   ],
                 ),
-              ),
-          
-              //DATOS FECHAS PAGO
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  
-                  
-                ],
-              ),
-          
-              //DATOS MONTO - TIPO
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  
-                ],
-              ),
+              ),          
           
               PopupMenuButton(
                 icon: Icon(Icons.more_vert),
@@ -106,12 +87,12 @@ class CardPagosCliente extends StatelessWidget {
                   return [
                     PopupMenuItem(
                       value: "editar_pago",
-                      child: Text("Editar pago")
+                      child: const Text("Editar pago")
                     ),
           
                     PopupMenuItem(
                       value: "eliminar_pago",
-                      child: Text("Eliminar pago")
+                      child: const Text("Eliminar pago")
                     ),
                   ];
                 }

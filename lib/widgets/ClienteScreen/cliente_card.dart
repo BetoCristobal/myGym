@@ -17,9 +17,9 @@ import 'package:provider/provider.dart';
 
 class ClienteCard extends StatelessWidget {
   final ClienteModel cliente;
-  PagoModel ultimoPago;
+  final PagoModel ultimoPago;
 
-  ClienteCard({super.key, required this.cliente, required this.ultimoPago});  
+  const ClienteCard({super.key, required this.cliente, required this.ultimoPago});  
 
   @override
   Widget build(BuildContext context) {   
@@ -27,8 +27,8 @@ class ClienteCard extends StatelessWidget {
     String txtFechaPago;
     String txtProximaFechaPago;
     if(ultimoPago.idCliente != 100000) {
-      txtFechaPago = DateFormat("dd-MM-yyyy").format(ultimoPago!.fechaPago);
-      txtProximaFechaPago = DateFormat("dd-MM-yyyy").format(ultimoPago!.proximaFechaPago);
+      txtFechaPago = DateFormat("dd-MM-yyyy").format(ultimoPago.fechaPago);
+      txtProximaFechaPago = DateFormat("dd-MM-yyyy").format(ultimoPago.proximaFechaPago);
     }else {
       txtFechaPago ="Falta pago";
       txtProximaFechaPago ="Falta pago";
@@ -63,8 +63,8 @@ class ClienteCard extends StatelessWidget {
                             style: TextStyles.textoCardCliente,
                             
                           ),
-                          Text(ultimoPago != null ? "Fecha de pago: ${txtFechaPago}" : "Fecha de pago: -", style: TextStyles.textoCardCliente),
-                          Text(ultimoPago != null ? "Próx. fecha de pago: ${txtProximaFechaPago}" : "Próxima fecha de pago: -", style: TextStyles.textoCardCliente),
+                          Text("Fecha de pago: $txtFechaPago", style: TextStyles.textoCardCliente),
+                          Text("Próx. fecha de pago: $txtProximaFechaPago", style: TextStyles.textoCardCliente),
                           Visibility(visible: ultimoPago.idCliente == 100000 ? false : true, 
                             child: Text('Días restantes: $diasRestantes', style: TextStyles.textoCardCliente)), 
                           Text('Estatus: ${cliente.estatus}', style: TextStyles.textoCardCliente)
