@@ -1,4 +1,4 @@
-package com.example.my_gym_oficial
+package com.pexel.my_gym_oficial
 
 import io.flutter.embedding.android.FlutterActivity
 

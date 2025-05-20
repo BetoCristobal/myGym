@@ -10,23 +10,20 @@ import 'package:my_gym_oficial/views/reportes/reportes_screen.dart';
 import 'package:my_gym_oficial/views/splash_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ToggleButtonsProvider()),
-        ChangeNotifierProvider(create: (_) => ClienteProvider(ClienteRepository())),
-        ChangeNotifierProvider(create: (_) => PagoProvider(PagoRepository())), 
-        ChangeNotifierProvider(create: (_) => ReportesProvider(PagoRepository(), ClienteRepository())), 
-      ],
-      child: MyApp(),
-    )
-);
+Widget buildApp({required bool isFreeVersion}) {
+  return MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => ToggleButtonsProvider()),
+      ChangeNotifierProvider(create: (_) => ClienteProvider(ClienteRepository())),
+      ChangeNotifierProvider(create: (_) => PagoProvider(PagoRepository())),
+      ChangeNotifierProvider(create: (_) => ReportesProvider(PagoRepository(), ClienteRepository())),
+    ],child: MyApp(isFreeVersion: isFreeVersion,),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isFreeVersion;
+  const MyApp({super.key, required this.isFreeVersion});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +31,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => SplashScreen(),
-        "clientesScreen": (context) => ClientesScreen(),
+        "/": (context) => SplashScreen(isFreeVersion: isFreeVersion,),
+        "clientesScreen": (context) => ClientesScreen(isFreeVersion: isFreeVersion,),
         "reportesScreen": (context) => ReportesScreen(),
       },
     );

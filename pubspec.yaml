@@ -1,7 +1,7 @@
 name: my_gym_oficial
-description: "A new Flutter project."
+description: "App para gestionar usuario y sus pagos en un gimnasio."
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0+1
 
 environment:
   sdk: ^3.6.2

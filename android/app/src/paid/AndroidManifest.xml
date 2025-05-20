@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.pexel.my_gym_oficial"
+    xmlns:tools="http://schemas.android.com/tools"> <!--PERMITE MEZCLAR LOS MANIFEST POR QUE SOBREESCRIBE ICON Y LABEL-->
+    <application
+        android:label="My Gym"
+        android:icon="@mipmap/ic_launcher_paid"
+        tools:replace="android:label,android:icon"> <!--LO MISMO DE ARRIBA-->
+    </application>
+</manifest>

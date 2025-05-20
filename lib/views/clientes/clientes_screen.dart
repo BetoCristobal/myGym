@@ -10,7 +10,8 @@ import 'package:my_gym_oficial/widgets/ClienteScreen/my_toggle_buttons.dart';
 import 'package:provider/provider.dart';
 
 class ClientesScreen extends StatefulWidget {
-  const ClientesScreen({super.key});
+  final bool isFreeVersion;
+  const ClientesScreen({super.key, required this.isFreeVersion});
 
   @override
   State<ClientesScreen> createState() => _ClientesScreenState();
@@ -37,20 +38,38 @@ class _ClientesScreenState extends State<ClientesScreen> {
       behavior: HitTestBehavior.opaque,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Clientes"),
+          title: Text(widget.isFreeVersion ? "Clientes - Version gratuita" : "Clientes"),
           actions: [
             IconButton(onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => ReportesScreen()));
             }, 
             icon: const Icon(Icons.bar_chart), color: Colors.white,),
             IconButton(onPressed: () {
-              showModalBottomSheet(
+              final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
+
+              //VERIFICAR SI ALCNZASTE REGISTROS MAXIMO VERSION GRATUITA
+              if(widget.isFreeVersion && clienteProvider.clientes.length >= 7){
+                showDialog(
+                            context: context, 
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Advertencia"),
+                                content: Text("Solo puedes registrar a 7 clientes en la version gratuita"),
+                              );
+                            }
+                          );
+              } else {
+                showModalBottomSheet(
                 isScrollControlled: true,
                 context: context, 
                 builder: (BuildContext context) {
                   return FormAgregarEditarCliente(estaEditando: false,);
                 }
               );
+              }
+                       
+
+              
             }, 
             icon: const Icon(Icons.person_add), color: Colors.white,)
           ],
