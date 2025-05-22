@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "configurations": [
+    {
+      "name": "Free (debug)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "args": [
+        "--flavor", "free",
+        "--target", "lib/main_free.dart"
+      ]
+    },
+    {
+      "name": "Paid (debug)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "args": [
+        "--flavor", "paid",
+        "--target", "lib/main_paid.dart"
+      ]
+    }
+  ]
+}
