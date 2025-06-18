@@ -6,6 +6,7 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
+      "program": "lib/main_free.dart",
       "args": [
         "--flavor", "free",
         "--target", "lib/main_free.dart"
@@ -16,6 +17,7 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
+      "program": "lib/main_paid.dart",
       "args": [
         "--flavor", "paid",
         "--target", "lib/main_paid.dart"

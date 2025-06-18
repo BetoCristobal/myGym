@@ -76,7 +76,13 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                   child: TextFormField(
                     controller: montoController,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "Monto"),
+                    decoration: InputDecoration(
+                      labelText: "Monto",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: Colors.grey, width: 1),
+                      ),
+                    ),
                     validator: (value) =>
                       value == null || value.isEmpty ? "Ingrese monto" : null,
                   ),
@@ -86,6 +92,7 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: DropdownButton<String>(
+                    icon: const Icon(Icons.arrow_drop_down),
                     hint: const Text("Elige una forma de pago"),
                     value: valorDropDownButton,
                     items: options.map((String option) {
@@ -132,10 +139,20 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                           ElevatedButton(
                             onPressed: () async {
                               fechaProximoPago = await seleccionarFecha(context);
-                              if(fechaProximoPago != null) {
+                              if(fechaProximoPago != null && fechaProximoPago!.isAfter(fechaPago!)) {
                                 setState(() {
                                   txtFechaProximoPago = DateFormat('dd-MM-yyyy').format(fechaProximoPago!);
                                 });
+                              } else {
+                                showDialog(
+                                  context: context, 
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text("Advertencia:"),
+                                      content: const Text("La fecha de próximo pago debe ser posterior a la fecha de pago.")
+                                    );
+                                  }
+                                );
                               }
                             }, 
                             child: Text(txtFechaProximoPago)
@@ -149,8 +166,7 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: ElevatedButton(
-                    onPressed: () async {
-                                            
+                    onPressed: () async {                                            
 
                       if(formKeyPagos.currentState!.validate() && fechaPago != null && fechaProximoPago != null && valorDropDownButton != null) {
                         final pagoProvider = Provider.of<PagoProvider>(context, listen: false);

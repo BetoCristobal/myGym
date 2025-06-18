@@ -17,7 +17,7 @@ LinearGradient asignarColorFondoCardCliente(String estatus) {
 
     case 'proximo':
       color1 = Color.fromARGB(255, 223, 164, 1);
-      color2 = Color.fromARGB(255, 255, 230, 1);
+      color2 = Color.fromARGB(255, 255, 196, 1);
       break;
 
     case 'corriente':

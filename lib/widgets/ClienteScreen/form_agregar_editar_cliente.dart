@@ -50,7 +50,7 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
               children: [
                 // TITULO
                 Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
                   child: Text(widget.estaEditando == false 
                   ? "Agregar cliente" 
                   : "Editar cliente", style: TextStyles.tituloShowModal, ),
@@ -61,7 +61,14 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                   margin: EdgeInsets.symmetric(vertical: 15),
                   child: TextFormField(
                     controller: nombresController,
-                    decoration: InputDecoration(labelText: "Nombres"),
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(
+                      labelText: "Nombres",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: Colors.grey, width: 1)
+                      )
+                    ),
                     validator: (value) => 
                       value == null || value.isEmpty ? "Ingrese nombres" : null,
                   ),
@@ -72,7 +79,14 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                   margin: EdgeInsets.symmetric(vertical: 15),
                   child: TextFormField(
                     controller: apellidosController,
-                    decoration: InputDecoration(labelText: "Apellidos"),
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(
+                      labelText: "Apellidos",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: Colors.grey, width: 1)
+                      )
+                    ),
                     validator: (value) => 
                       value == null || value.isEmpty ? "Ingrese apellidos" : null,
                   ),
@@ -84,7 +98,13 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                   child: TextFormField(
                     controller: telefonoController,
                     keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(labelText: "Teléfono"),
+                    decoration: InputDecoration(
+                      labelText: "Teléfono",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: Colors.grey, width: 1)
+                      )
+                    ),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(10),
                       FilteringTextInputFormatter.digitsOnly

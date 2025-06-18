@@ -33,7 +33,8 @@ class DatabaseHelper {
             nombres TEXT NOT NULL,
             apellidos TEXT NOT NULL,
             telefono TEXT NOT NULL,
-            estatus TEXT NOT NULL
+            estatus TEXT NOT NULL,
+            fotoPath TEXT
             )
             '''
           );

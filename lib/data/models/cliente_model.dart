@@ -4,7 +4,7 @@ class ClienteModel {
   String apellidos;
   String telefono;
   String estatus;
-  //String? fotografia;
+  String? fotoPath;
 
   ClienteModel({
     this.id,
@@ -12,7 +12,7 @@ class ClienteModel {
     required this.apellidos,
     required this.telefono,
     required this.estatus,
-    //this.fotografia,
+    this.fotoPath,
   });
 
   //Cliente -> Map
@@ -24,7 +24,7 @@ class ClienteModel {
       'apellidos': apellidos,
       'telefono': telefono,
       'estatus': estatus,
-      //'fotografia': fotografia,
+      'fotoPath': fotoPath
     };
   }
 
@@ -36,7 +36,7 @@ class ClienteModel {
       apellidos: map['apellidos'], 
       telefono: map['telefono'], 
       estatus: map['estatus'],
-      //fotografia: map['fotografia']
+      fotoPath: map['fotoPath']
       );
   }
 }

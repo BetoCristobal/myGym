@@ -89,10 +89,20 @@ class _FormAplicarFiltrosState extends State<FormAplicarFiltros> {
                         ElevatedButton(
                           onPressed: () async {
                             fechaFin = await seleccionarFecha(context);
-                            if(fechaFin != null) {
+                            if(fechaFin != null && fechaFin!.isAfter(fechaInicio!)) {
                               setState(() {
                                 txtFechaFin = DateFormat('dd-MM-yyyy').format(fechaFin!);
                               });
+                            } else {
+                              showDialog(
+                                context: context, 
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Advertencia"),
+                                    content: Text("La fecha fin debe ser posterior a la fecha inicio."),
+                                  );
+                                }
+                              );
                             }
                           }, 
                           child: Text(txtFechaFin)
