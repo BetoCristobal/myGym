@@ -52,27 +52,30 @@ class ClienteCard extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [                  
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("${cliente.nombres} ${cliente.apellidos}", 
-                            style: TextStyles.textoCardCliente,
-                            
-                          ),
-                          Text("Fecha de pago: $txtFechaPago", style: TextStyles.textoCardCliente),
-                          Text("Próx. fecha de pago: $txtProximaFechaPago", style: TextStyles.textoCardCliente),
-                          Visibility(visible: ultimoPago.idCliente == 100000 ? false : true, 
-                            child: Text('Días restantes: $diasRestantes', style: TextStyles.textoCardCliente)), 
-                          Text('Estatus: ${cliente.estatus}', style: TextStyles.textoCardCliente)
-                        ],
-                      ),
-                    ),
-                  
-                    PopupMenuButton(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("${cliente.nombres} ${cliente.apellidos}", 
+                      style: TextStyles.textoCardCliente,                            
+                    ),                    
+                                
+                    Divider(),                    
+                                
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Pago: $txtFechaPago", style: TextStyles.textoCardCliente),
+                            Text("Prox. pago: $txtProximaFechaPago", style: TextStyles.textoCardCliente),
+                            Visibility(visible: ultimoPago.idCliente == 100000 ? false : true, 
+                              child: Text('Días restantes: $diasRestantes', style: TextStyles.textoCardCliente)), 
+                            Text('Estatus: ${cliente.estatus}', style: TextStyles.textoCardCliente,)
+                          ],
+                        ),
+
+                        PopupMenuButton(
                       icon: Icon(Icons.more_vert),
                       onSelected: (value) {
                         switch(value) {
@@ -141,7 +144,9 @@ class ClienteCard extends StatelessWidget {
                           ),
                         ];
                       }
-                    ),                  
+                    ),
+                      ],
+                    ), 
                   ],
                 ),
               ),

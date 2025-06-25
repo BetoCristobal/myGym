@@ -37,17 +37,40 @@ class _BarraBusquedaState extends State<BarraBusqueda> {
               focusNode: widget.focusNode,
               enabled: widget.desactivarBarraBusqueda,
               controller: _searchController,
+              style: TextStyle(color: Colors.white54),
               decoration: InputDecoration(
                 labelText: "Buscar...",
-                prefixIcon: Icon(Icons.search),
+                labelStyle: TextStyle(
+                  color: widget.desactivarBarraBusqueda ? Colors.white54 : Color.fromARGB(255, 61, 61, 61)
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: widget.desactivarBarraBusqueda ? Colors.white54 : Color.fromARGB(255, 61, 61, 61),
+                ),
                 suffixIcon: _searchController.text.isNotEmpty
                   ? IconButton(
                       onPressed: _clearSearchText, icon: const Icon(Icons.clear)
                     )
                   : null ,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10)
-                )
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: widget.desactivarBarraBusqueda 
+                      ? Colors.white54 
+                      : const Color.fromARGB(255, 61, 61, 61)
+                  )
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.white54)
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Color.fromARGB(255, 61, 61, 61))
+                ),
               ),
               onChanged: widget.onSearchChanged
             );

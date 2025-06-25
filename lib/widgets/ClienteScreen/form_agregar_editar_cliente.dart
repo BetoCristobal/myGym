@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/styles/text_styles.dart';
+import 'package:my_gym_oficial/widgets/ClienteScreen/tomar_foto.dart';
 import 'package:provider/provider.dart';
 import '../../providers/cliente_provider.dart';
 
@@ -23,9 +26,12 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
   late TextEditingController apellidosController;
   late TextEditingController telefonoController;
 
+  String? _fotoPath;
+
   @override
   void initState() {
     super.initState();
+    _fotoPath = widget.estaEditando == true ? widget.cliente?.fotoPath : null;
     nombresController = TextEditingController(
       text: widget.estaEditando == true ? widget.cliente?.nombres : ""
     );
@@ -55,7 +61,70 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                   ? "Agregar cliente" 
                   : "Editar cliente", style: TextStyles.tituloShowModal, ),
                 ),
-            
+
+                //BOTON TOMAR FOTO
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      children: [
+
+                        //BOTON TOMAR FOTO-------------------------------------------------------------                       
+                        Container(
+                          margin: EdgeInsets.only(top: 10, bottom: 20),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              iconColor: Color.fromARGB(255, 255, 255, 255),
+                            ),
+                            onPressed: () async {
+                              final foto = await tomarFoto();
+                        
+                              if(foto != null) {
+                                _fotoPath = foto;
+                                setState(() {
+                                  
+                                });
+                              }
+                              print(_fotoPath);
+                            }, 
+                            child: Icon(Icons.camera_alt, size: 35),
+                          ),
+                        ),
+
+                        // BOTON ELIMINAR FOTO----------------------------------------------------------
+                        if(_fotoPath != null) 
+                        Container(
+                          margin: EdgeInsets.only(top: 10, bottom: 20),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              iconColor: Color.fromARGB(255, 255, 255, 255),
+                            ),
+                            onPressed: () async {
+                              final archivo = File(_fotoPath!);
+                              if(await archivo.exists()) {
+                                await archivo.delete();
+                                print("❌ Foto eliminada: $_fotoPath");
+                              } else {
+                                print("🗑️La foto no existe: $_fotoPath");
+                              }
+                              setState(() {
+                                _fotoPath = null;
+                              });
+                            }, 
+                            child: Icon(Icons.delete_forever_rounded, size: 35),
+                          ),
+                        ),
+                      ],
+                    ),
+                    // IMAGEN FOTO ----------------------------------------------------------------------
+                    _fotoPath != null 
+                      ? Image.file(File(_fotoPath!), width: 150, height: 150, fit: BoxFit.cover) 
+                      : const Icon(Icons.person, size: 100),
+                  ],
+                ),
+
                 // CAMPO NOMBRES
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 15),
@@ -118,12 +187,16 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                       return null;
                     }
                   ),
-                ),
+                ),                
             
                 // BOTON GUARDAR
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 20),
+                  width: double.infinity,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 29, 173, 33)
+                    ),
                     onPressed: () async {
                       if(formKey.currentState!.validate()) {
                         //OBTENEMOS PROVIDER
@@ -134,24 +207,40 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                           await clienteProvider.agregarCliente(
                             nombresController.text, 
                             apellidosController.text, 
-                            telefonoController.text
+                            telefonoController.text,
+                            _fotoPath,                            
                           );
 
                           Navigator.pop(context);
                         } else if(widget.estaEditando == true) {
                           int? id = widget.cliente?.id;
+
+                          //VERIFICAMOS SI HAY UNA FOTO ANTERIOR, SI SI HAY LA BORRAMOS
+                          if(_fotoPath != null && widget.cliente?.fotoPath != null) {
+                            if(_fotoPath != widget.cliente!.fotoPath) {
+                              final fotoAnterior = File(widget.cliente!.fotoPath!);
+                              if(await fotoAnterior.exists()) {
+                                await fotoAnterior.delete();
+                                print("❌ Foto anterior eliminada: ${widget.cliente!.fotoPath}");
+                              } else {
+                                print("La foto anterior no existe: ${widget.cliente!.fotoPath}");
+                              }
+                            }
+                          }
+
                           await clienteProvider.actualizarCliente(
                             id!,
                             nombresController.text, 
                             apellidosController.text, 
                             telefonoController.text,
                             widget.cliente!.estatus,
+                            _fotoPath, // Si se actualiza la foto, se pasa la nueva ruta
                           );
                           Navigator.pop(context);
                         }
                       }
                     }, 
-                    child: Text(widget.estaEditando == false ? "Guardar" : "Actualizar")
+                    child: Text(widget.estaEditando == false ? "Guardar cliente" : "Actualizar cliente", style: TextStyle(color: Colors.white),)
                   ),
                 )
               ],

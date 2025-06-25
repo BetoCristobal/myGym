@@ -6,6 +6,7 @@ import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/providers/reportes_provider.dart';
 import 'package:my_gym_oficial/providers/toggle_buttons_provider.dart';
 import 'package:my_gym_oficial/views/clientes/clientes_screen.dart';
+import 'package:my_gym_oficial/views/pruebas/ver_fotos.dart';
 import 'package:my_gym_oficial/views/reportes/reportes_screen.dart';
 import 'package:my_gym_oficial/views/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => SplashScreen(isFreeVersion: isFreeVersion,),
         "clientesScreen": (context) => ClientesScreen(isFreeVersion: isFreeVersion,),
         "reportesScreen": (context) => ReportesScreen(),
+        "verFotos": (context) => const VerFotos(),
       },
     );
   }

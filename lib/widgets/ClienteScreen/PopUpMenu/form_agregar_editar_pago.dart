@@ -93,7 +93,7 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: DropdownButton<String>(
                     icon: const Icon(Icons.arrow_drop_down),
-                    hint: const Text("Elige una forma de pago"),
+                    hint: const Text("Elige una forma de pago", style: TextStyle(color: Colors.black87),),
                     value: valorDropDownButton,
                     items: options.map((String option) {
                       return DropdownMenuItem<String>(
@@ -117,8 +117,11 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                       //FECHA PAGO
                       Column(
                         children: [
-                          const Text("Fecha de pago:"),                          
+                          const Text("Fecha de pago:", style: TextStyle(color: Colors.black87),),                          
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(255, 0, 132, 255)
+                            ),
                             onPressed: () async {
                               fechaPago = await seleccionarFecha(context);
                               if(fechaPago != null){
@@ -127,7 +130,7 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                                 });
                               }
                             }, 
-                            child: Text(txtFechaPago)
+                            child: Text(txtFechaPago, style: TextStyle(color: Colors.white),)
                           ),  
                         ],
                       ),
@@ -135,8 +138,11 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                       //FECHA PROXIMO PAGO
                       Column(
                         children: [
-                          const Text("Próximo pago:"),                              
+                          const Text("Próximo pago:", style: TextStyle(color: Colors.black87),),                              
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(255, 0, 132, 255)
+                            ),
                             onPressed: () async {
                               fechaProximoPago = await seleccionarFecha(context);
                               if(fechaProximoPago != null && fechaProximoPago!.isAfter(fechaPago!)) {
@@ -149,13 +155,13 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: const Text("Advertencia:"),
-                                      content: const Text("La fecha de próximo pago debe ser posterior a la fecha de pago.")
+                                      content: const Text("La fecha de próximo pago debe ser posterior a la fecha de pago.",)
                                     );
                                   }
                                 );
                               }
                             }, 
-                            child: Text(txtFechaProximoPago)
+                            child: Text(txtFechaProximoPago, style: TextStyle(color: Colors.white),)
                           ),
                         ],
                       ),
@@ -164,8 +170,12 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                 ),
 
                 Container(
+                  width: double.infinity,
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 29, 173, 33)
+                    ),
                     onPressed: () async {                                            
 
                       if(formKeyPagos.currentState!.validate() && fechaPago != null && fechaProximoPago != null && valorDropDownButton != null) {
@@ -207,7 +217,7 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                         );
                       }
                     }, 
-                    child: Text(widget.estaEditando == false ? "Guardar" : "Actualizar")
+                    child: Text(widget.estaEditando == false ? "Guardar pago" : "Actualizar pago", style: TextStyle(color: Colors.white),)
                   ),
                 ),
               ],

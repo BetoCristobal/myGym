@@ -32,6 +32,22 @@ class ClienteRepository {
   //Retorno: Devuelve la lista de clientes como Future<List<ClienteModel>>.
 
   //---------------------------------------------------------------------------------
+
+  Future<ClienteModel> getClienteById(int id) async {
+    final db = await _dbHelper.database;
+    final maps = await db.query(
+      'clientes',
+      where: 'id = ?',
+      whereArgs: [id]
+    );
+    
+    if (maps.isNotEmpty) {
+      return ClienteModel.fromMap(maps.first);
+    } else {
+      throw Exception('Cliente no encontrado');
+    }
+  }
+
 //-----------------------------------------------------------------------------------
 
   Future<List<ClienteModel>> getClientesOrdenadosById() async {
@@ -75,5 +91,19 @@ class ClienteRepository {
     final db= await _dbHelper.database;
     await db.delete('clientes', where: 'id = ?', whereArgs: [id]);
   }
+
+
+
+  Future<List<String>> obtenerFotosPathDesdeBD() async {
+  final db = await _dbHelper.database;
+  final List<Map<String, dynamic>> clientes = await db.query('clientes');
+
+  return clientes
+    .map((cliente) => cliente['fotoPath'] as String?)
+    .where((path) => path != null && path.isNotEmpty)
+    .cast<String>()
+    .toList();
+
+}
 
 }

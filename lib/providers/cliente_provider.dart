@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/data/repositories/cliente_repository.dart';
@@ -32,13 +34,14 @@ class ClienteProvider extends ChangeNotifier{
     }            
   }
 
-  Future<void> agregarCliente(String nombres, String apellidos, String telefono) async {
+  Future<void> agregarCliente(String nombres, String apellidos, String telefono, String? fotoPath) async {
     try {
       final nuevoCliente = ClienteModel(
       nombres: nombres, 
       apellidos: apellidos, 
       telefono: telefono, 
-      estatus: "vencido"
+      estatus: "vencido",
+      fotoPath: fotoPath, //Ruta de la foto del cliente
       //Estatus: corriente, vencido, urgente, proximo.
       );
       await clienteRepo.insertCliente(nuevoCliente);
@@ -51,14 +54,15 @@ class ClienteProvider extends ChangeNotifier{
     }
   }
 
-  Future<void> actualizarCliente(int id, String nombres, String apellidos, String telefono, String estatus) async {
+  Future<void> actualizarCliente(int id, String nombres, String apellidos, String telefono, String estatus, String? fotoPath) async {
     try {
       final clienteActualizado = ClienteModel(
         id: id,
         nombres: nombres, 
         apellidos: apellidos, 
         telefono: telefono, 
-        estatus: estatus
+        estatus: estatus,
+        fotoPath: fotoPath, //Ruta de la foto del cliente
       );
       await clienteRepo.updateCliente(clienteActualizado);      
       //notifyListeners();
@@ -80,8 +84,19 @@ class ClienteProvider extends ChangeNotifier{
 
   Future<void> eliminarCliente(int id) async {
     try{
+      final cliente = await clienteRepo.getClienteById(id);
+
+      if(cliente.fotoPath != null) {
+        final foto = File(cliente.fotoPath!);
+        if(await foto.exists()) {
+          await foto.delete();
+          print("❌ Foto eliminada: ${cliente.fotoPath}");
+        } else {
+          print("La foto no existe: ${cliente.fotoPath}");
+        }
+      }
+
       await clienteRepo.deleteCliente(id);
-      //notifyListeners();
       await cargarClientes();
     } catch(e) {
       print("❌ Error al eliminar cliente: $e");

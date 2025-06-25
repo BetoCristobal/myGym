@@ -13,12 +13,17 @@ void AlertDialogEliminarCliente(BuildContext context, int id) {
         content: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            ElevatedButton(onPressed: () async {
-              final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
-              await clienteProvider.eliminarCliente(id);
-              Navigator.pop(context);
-            }, 
-              child: const Text("Eliminar")),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red
+              ),
+              onPressed: () async {
+                final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
+                await clienteProvider.eliminarCliente(id);
+                Navigator.pop(context);
+              }, 
+              child: const Text("Eliminar", style: TextStyle(color: Colors.white),)
+            ),
             ElevatedButton(onPressed: () {Navigator.pop(context);}, child: const Text("Cancelar"))
           ],
         ),
