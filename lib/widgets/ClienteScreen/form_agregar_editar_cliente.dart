@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/styles/text_styles.dart';
-import 'package:my_gym_oficial/widgets/ClienteScreen/tomar_foto.dart';
+import 'package:my_gym_oficial/widgets/ClienteScreen/funciones_foto.dart';
 import 'package:provider/provider.dart';
 import '../../providers/cliente_provider.dart';
 
@@ -27,6 +27,7 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
   late TextEditingController telefonoController;
 
   String? _fotoPath;
+  File? fotoTemporal;
 
   @override
   void initState() {
@@ -78,10 +79,9 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                               iconColor: Color.fromARGB(255, 255, 255, 255),
                             ),
                             onPressed: () async {
-                              final foto = await tomarFoto();
+                              fotoTemporal = await FuncionesFoto.tomarFotoTemporal();
                         
-                              if(foto != null) {
-                                _fotoPath = foto;
+                              if(fotoTemporal != null) {                                
                                 setState(() {
                                   
                                 });
@@ -93,7 +93,7 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                         ),
 
                         // BOTON ELIMINAR FOTO----------------------------------------------------------
-                        if(_fotoPath != null) 
+                        if(fotoTemporal != null || _fotoPath != null) 
                         Container(
                           margin: EdgeInsets.only(top: 10, bottom: 20),
                           child: ElevatedButton(
@@ -102,14 +102,9 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                               iconColor: Color.fromARGB(255, 255, 255, 255),
                             ),
                             onPressed: () async {
-                              final archivo = File(_fotoPath!);
-                              if(await archivo.exists()) {
-                                await archivo.delete();
-                                print("❌ Foto eliminada: $_fotoPath");
-                              } else {
-                                print("🗑️La foto no existe: $_fotoPath");
-                              }
+                              
                               setState(() {
+                                fotoTemporal = null;
                                 _fotoPath = null;
                               });
                             }, 
@@ -119,9 +114,12 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                       ],
                     ),
                     // IMAGEN FOTO ----------------------------------------------------------------------
-                    _fotoPath != null 
-                      ? Image.file(File(_fotoPath!), width: 150, height: 150, fit: BoxFit.cover) 
-                      : const Icon(Icons.person, size: 100),
+                    fotoTemporal != null
+                      ? Image.file(fotoTemporal!, width: 150, height: 150, fit: BoxFit.cover,)
+                      : (_fotoPath != null && File(_fotoPath!).existsSync()
+                        ? Image.file(File(_fotoPath!), width: 150, height:  150, fit: BoxFit.cover,)
+                        : const Icon(Icons.person, size: 150,)
+                      )
                   ],
                 ),
 
@@ -201,6 +199,8 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                       if(formKey.currentState!.validate()) {
                         //OBTENEMOS PROVIDER
                         final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
+
+                        _fotoPath = fotoTemporal != null ? await FuncionesFoto.guardarFoto(fotoTemporal!) : null;
                         
                         // SI NO ESTA EDITANDO, OSEA SI SE ESTA AGREGANDO NUEVO CLIENTE
                         if(widget.estaEditando == false) {
@@ -222,9 +222,13 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                               if(await fotoAnterior.exists()) {
                                 await fotoAnterior.delete();
                                 print("❌ Foto anterior eliminada: ${widget.cliente!.fotoPath}");
-                              } else {
-                                print("La foto anterior no existe: ${widget.cliente!.fotoPath}");
-                              }
+                              } 
+                            }
+                          } else if (_fotoPath == null && widget.cliente?.fotoPath != null) {
+                            final fotoAnterior = File(widget.cliente!.fotoPath!);
+                            if(await fotoAnterior.exists()) {
+                              await fotoAnterior.delete();
+                              print("❌ Foto anterior eliminada: ${widget.cliente!.fotoPath}");
                             }
                           }
 
