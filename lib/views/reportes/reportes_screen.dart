@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/providers/reportes_provider.dart';
 import 'package:my_gym_oficial/styles/text_styles.dart';
+import 'package:my_gym_oficial/utils/pdf_utils.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/container_total_tipo_pago.dart';
 import 'package:my_gym_oficial/widgets/Reportes%20Screen/form_aplicar_filtros.dart';
 import 'package:provider/provider.dart';
@@ -45,17 +46,38 @@ class _ReportesScreenState extends State<ReportesScreen> {
         backgroundColor: Colors.black,
         iconTheme: IconThemeData(color: Colors.white),
         actions: [
-          IconButton(onPressed: () {
+
+          // ICONO PARA REINICIAR FILTROS
+          IconButton(
+            highlightColor: Colors.white38,
+            onPressed: () {
             Provider.of<ReportesProvider>(context, listen: false).reiniciarFiltros();}, icon: const Icon(Icons.restart_alt)
           ),
-          IconButton(onPressed: () {
+
+          // ICONO APLICAR FILTROS
+          IconButton(
+            highlightColor: Colors.white38,
+            onPressed: () {
             showModalBottomSheet(
               context: context, 
               builder: (BuildContext context) {
                 return FormAplicarFiltros();
               }
             );
-          }, icon: const Icon(Icons.filter_alt_outlined))
+          }, icon: const Icon(Icons.filter_alt_outlined)),
+
+          // ICONO GENERAR PDF
+          IconButton(
+            highlightColor: Colors.white38,
+            onPressed: () async {
+              final provider = Provider.of<ReportesProvider>(context, listen: false);
+              await exportarReportePDFYGuardarEnDescargas(provider);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("✅ PDF guardado en Descargas")),
+              );
+            }, 
+            icon: const Icon(Icons.picture_as_pdf)
+          ),
         ],
       ),
       body: Column(

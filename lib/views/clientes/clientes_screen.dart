@@ -54,16 +54,19 @@ class _ClientesScreenState extends State<ClientesScreen> {
             title: Text(widget.isFreeVersion ? "Clientes - Version gratuita" : "Clientes"),
             actions: [
               IconButton(
+                highlightColor: Colors.white38,
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => VerFotos()));
                 }, 
                 icon: Icon(Icons.photo_album)),
               IconButton(
+                highlightColor: Colors.white38,
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ReportesScreen()));
                 }, 
                 icon: const Icon(Icons.bar_chart), color: Colors.white,),
               IconButton(
+                highlightColor: Colors.white38,
                 onPressed: () {
                   final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
         
