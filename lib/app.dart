@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
         "clientesScreen": (context) => ClientesScreen(isFreeVersion: isFreeVersion,),
         "reportesScreen": (context) => ReportesScreen(),
         "verFotos": (context) => const VerFotos(),
+        
       },
     );
   }

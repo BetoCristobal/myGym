@@ -37,15 +37,17 @@ class _BarraBusquedaState extends State<BarraBusqueda> {
               focusNode: widget.focusNode,
               enabled: widget.desactivarBarraBusqueda,
               controller: _searchController,
-              style: TextStyle(color: Colors.white54),
+              style: TextStyle(color: Colors.white70),
               decoration: InputDecoration(
                 labelText: "Buscar...",
+                //filled: true,
+                //fillColor: Colors.white,
                 labelStyle: TextStyle(
-                  color: widget.desactivarBarraBusqueda ? Colors.white54 : Color.fromARGB(255, 61, 61, 61)
+                  color: widget.desactivarBarraBusqueda ? Colors.white70 : Colors.white24
                 ),
                 prefixIcon: Icon(
                   Icons.search,
-                  color: widget.desactivarBarraBusqueda ? Colors.white54 : Color.fromARGB(255, 61, 61, 61),
+                  color: widget.desactivarBarraBusqueda ? Colors.white70 : Colors.white24,
                 ),
                 suffixIcon: _searchController.text.isNotEmpty
                   ? IconButton(
@@ -65,11 +67,11 @@ class _BarraBusquedaState extends State<BarraBusqueda> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.white54)
+                  borderSide: const BorderSide(color: Colors.white70)
                 ),
                 disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Color.fromARGB(255, 61, 61, 61))
+                  borderSide: const BorderSide(color: Colors.white24)
                 ),
               ),
               onChanged: widget.onSearchChanged

@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 //VAMOS A INTENTAR SOLO CREAR LA FUNCION SIN STATELESS
 
-void AlertDialogEliminarCliente(BuildContext context, int id) {
-  showDialog(
+Future<bool?> AlertDialogEliminarCliente(BuildContext context, int id) {
+  return showDialog<bool>(
     context: context, 
     builder: (BuildContext context) {
       return AlertDialog(
@@ -18,13 +18,16 @@ void AlertDialogEliminarCliente(BuildContext context, int id) {
                 backgroundColor: Colors.red
               ),
               onPressed: () async {
-                final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
-                await clienteProvider.eliminarCliente(id);
-                Navigator.pop(context);
+                //final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
+                //await clienteProvider.eliminarCliente(id);
+                Navigator.of(context).pop(true); // Cerrar el diálogo y retornar true 
               }, 
               child: const Text("Eliminar", style: TextStyle(color: Colors.white),)
             ),
-            ElevatedButton(onPressed: () {Navigator.pop(context);}, child: const Text("Cancelar"))
+            ElevatedButton(
+              onPressed: () {Navigator.of(context).pop(false);}, 
+              child: const Text("Cancelar")
+            )
           ],
         ),
       );

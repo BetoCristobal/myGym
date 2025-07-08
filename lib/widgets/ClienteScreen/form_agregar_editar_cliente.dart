@@ -200,7 +200,9 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                         //OBTENEMOS PROVIDER
                         final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
 
-                        _fotoPath = fotoTemporal != null ? await FuncionesFoto.guardarFoto(fotoTemporal!) : null;
+                        if (fotoTemporal != null) {
+                          _fotoPath = await FuncionesFoto.guardarFoto(fotoTemporal!);
+                        }
                         
                         // SI NO ESTA EDITANDO, OSEA SI SE ESTA AGREGANDO NUEVO CLIENTE
                         if(widget.estaEditando == false) {

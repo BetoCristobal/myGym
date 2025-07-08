@@ -91,21 +91,36 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                 //LISTA DROPDOWN TIPO PAGO
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
-                  child: DropdownButton<String>(
-                    icon: const Icon(Icons.arrow_drop_down),
-                    hint: const Text("Elige una forma de pago", style: TextStyle(color: Colors.black87),),
-                    value: valorDropDownButton,
-                    items: options.map((String option) {
-                      return DropdownMenuItem<String>(
-                        value: option,
-                        child: Text(option),
-                      );
-                    }).toList(), 
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        valorDropDownButton = newValue;
-                      });
-                    }
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color.fromARGB(255, 0, 132, 255),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    
+                    child: DropdownButton<String>(
+                      borderRadius: BorderRadius.circular(10),
+                      dropdownColor: const Color.fromARGB(255, 0, 132, 255),
+                      icon: const Icon(Icons.arrow_drop_down, color: Colors.white,),
+                      hint: const Text(
+                        "Elige una forma de pago", 
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255)
+                        ),
+                      ),
+                      value: valorDropDownButton,
+                      items: options.map((String option) {
+                        return DropdownMenuItem<String>(
+                          value: option,
+                          child: Text(option, style: TextStyle(color: Colors.white),),
+                        );
+                      }).toList(), 
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          valorDropDownButton = newValue;
+                        });
+                      }
+                    ),
                   ),
                 ),
             

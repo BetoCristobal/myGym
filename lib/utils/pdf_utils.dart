@@ -1,9 +1,6 @@
 import 'dart:io';
-
-import 'package:file_saver/file_saver.dart';
 import 'package:my_gym_oficial/providers/reportes_provider.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:pdf/pdf.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -27,9 +24,9 @@ Future<void> exportarReportePDFYGuardarEnDescargas(ReportesProvider reportesProv
           pw.Text("Periodo: ${reportesProvider.txtFechaInicioFiltro} - ${reportesProvider.txtFechaFinFiltro}", style: pw.TextStyle(fontSize: 18)),
           pw.Text("Tipo de pago: ${reportesProvider.txtTipoPago}", style: pw.TextStyle(fontSize: 18)),
         ] else
-          pw.Text("Reporte sin filtros aplicados"),
-        pw.SizedBox(height: 10),
-        pw.Text("Total: \$${reportesProvider.sumaPagos.toStringAsFixed(2)}"),
+          pw.Text("Reporte sin filtros aplicados", style: pw.TextStyle(fontSize: 18)),
+        //pw.SizedBox(height: 10),
+        pw.Text("Total: \$${reportesProvider.sumaPagos.toStringAsFixed(2)}", style: pw.TextStyle(fontSize: 18)),
         pw.SizedBox(height: 10),
         pw.Table.fromTextArray(
           border: pw.TableBorder.all(),
@@ -52,7 +49,7 @@ Future<void> exportarReportePDFYGuardarEnDescargas(ReportesProvider reportesProv
   Directory? documentosDir;
   if (Platform.isAndroid) {
     // Para Android, intenta obtener la carpeta pública Documents
-    final Directory? externalDir = await getExternalStorageDirectory();
+    //final Directory? externalDir = await getExternalStorageDirectory();
     final String documentosPath = "/storage/emulated/0/Documents";
     documentosDir = Directory(documentosPath);
     if (!await documentosDir.exists()) {

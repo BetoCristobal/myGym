@@ -18,11 +18,11 @@ class MyToggleButtons extends StatelessWidget {
                   width: double.infinity,
                   child: Center(
                     child: ToggleButtons(
-                      borderColor: Colors.white30,
-                      selectedBorderColor: Colors.white54,
+                      borderColor: Colors.white38,    //selectedBorderColor: Colors.white54,
                       color: Colors.white,
                       selectedColor: Colors.white,
-                      fillColor: Colors.white12,
+                      selectedBorderColor: Colors.white38,
+                      fillColor: Colors.blue[800],
                       borderRadius: BorderRadius.circular(10),
                       isSelected: toggleProvider.isSelected,
                       onPressed: (int index) {

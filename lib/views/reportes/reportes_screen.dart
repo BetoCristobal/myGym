@@ -73,7 +73,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
               final provider = Provider.of<ReportesProvider>(context, listen: false);
               await exportarReportePDFYGuardarEnDescargas(provider);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("✅ PDF guardado en Descargas")),
+                SnackBar(content: Text("✅ PDF guardado en Documentos")),
               );
             }, 
             icon: const Icon(Icons.picture_as_pdf)
@@ -135,7 +135,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
                       final txtFechaPago = DateFormat("dd-MM-yyyy").format(reporte.fechaPago);
                       return DataRow(
                         cells: [
-                          DataCell(Text(reporte.nombreCliente)),
+                          DataCell(Text(reporte.nombreCliente, maxLines: 2,  overflow: TextOverflow.ellipsis,)),
                           DataCell(Text(txtFechaPago)),
                           DataCell(Text("\$${reporte.montoPago}")),
                           DataCell(Text(reporte.tipoPago)),
