@@ -2,12 +2,10 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-enviarWhatsapp(DateTime proximoPago, String telefonoString) async {
-  String proximaFechaPago = DateFormat('dd-MM-yyyy').format(proximoPago);
-  //int telefono = int.parse(telefonoString);
-
+enviarWhatsapp(String telefonoString, String mensaje) async {
+  
   final url = 
-    'https://wa.me/521$telefonoString?text=${Uri.encodeComponent("Hola que tal,recordandote que tu fecha de pago es el proximo $proximaFechaPago.\n Nunca dejes de entrenar,que tengas un bonito día.")}';
+    'https://wa.me/521$telefonoString?text=${Uri.encodeComponent("${mensaje}")}';
 
   try {
     print("Intentando lanzar: $url");

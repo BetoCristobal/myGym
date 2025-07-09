@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_gym_oficial/data/models/pago_model.dart';
 import 'package:my_gym_oficial/providers/cliente_provider.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
+import 'package:my_gym_oficial/utils/test_agregar_100_usuarios.dart';
 import 'package:my_gym_oficial/views/pruebas/ver_fotos.dart';
 import 'package:my_gym_oficial/views/reportes/reportes_screen.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/barra_busqueda.dart';
@@ -67,8 +68,14 @@ class _ClientesScreenState extends State<ClientesScreen> {
         child: Scaffold(
           //backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           appBar: AppBar(
-            title: Text(widget.isFreeVersion ? "Clientes - Version gratuita" : "Clientes"),
+            title: Text(widget.isFreeVersion ? "Clientes - Free" : "Clientes"),
             actions: [
+              IconButton(
+                highlightColor: Colors.white38,
+                onPressed: () {
+                  agregarClientesDePrueba(context);
+                }, 
+                icon: Icon(Icons.send_time_extension_sharp)),
               IconButton(
                 highlightColor: Colors.white38,
                 onPressed: () {

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,12 +9,11 @@ import 'package:my_gym_oficial/providers/cliente_provider.dart';
 import 'package:my_gym_oficial/providers/pago_provider.dart';
 import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:my_gym_oficial/utils/asignar_color_estatus_informacion.dart';
-import 'package:my_gym_oficial/utils/asignar_color_fondo_card_cliente.dart';
-import 'package:my_gym_oficial/utils/enviar_whatsapp.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_eliminar_cliente.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_eliminar_pago.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/form_agregar_editar_pago.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/form_agregar_editar_cliente.dart';
+import 'package:my_gym_oficial/widgets/InformacionScreen/alert_dialog_whatsapp.dart';
 import 'package:provider/provider.dart';
 
 class InformacionScreen extends StatefulWidget {
@@ -53,7 +51,7 @@ class _InformacionScreenState extends State<InformacionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Informacion"),
+        title: const Text("Información"),
         titleTextStyle: TextStyle(fontSize: 23, color: Colors.white),
         backgroundColor: Colors.black,
         iconTheme: IconThemeData(color: Colors.white),
@@ -74,19 +72,7 @@ class _InformacionScreenState extends State<InformacionScreen> {
       ),
       body: Column(
         children: [
-          //-------------------------------------------------TXT STATUS
-          // Container(
-          //   padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(10),
-          //     color: asignarColorEstatusInformacion(cliente.estatus)
-          //   ),
-          //   child: Text(
-          //     "${cliente.estatus}",
-          //     style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold), 
-          //     textAlign: TextAlign.center,
-          //   )
-          // ),
+       
           Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20, top: 0,),
             child: Consumer<ClienteProvider>(
@@ -139,7 +125,10 @@ class _InformacionScreenState extends State<InformacionScreen> {
                                 //---------------------------------------------------------BOTON WHATSAPP
                                 ElevatedButton.icon(
                                   icon: Icon(FontAwesomeIcons.whatsapp, color: Colors.green[900]),
-                                  onPressed: () {enviarWhatsapp(widget.ultimoPago.proximaFechaPago, cliente.telefono);}, 
+                                  onPressed: () {
+                                    alertDialogWhatsApp(context, widget.ultimoPago.proximaFechaPago, cliente.telefono);
+                                    //enviarWhatsapp(widget.ultimoPago.proximaFechaPago, cliente.telefono);
+                                  }, 
                                   label: Text("WhatsApp"),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.green[200],
@@ -231,11 +220,11 @@ class _InformacionScreenState extends State<InformacionScreen> {
 
                 return DataTable2(
                 columnSpacing: 10,
-                horizontalMargin: 12,
+                horizontalMargin: 10,
                 minWidth: 450,
                 columns: [
-                  DataColumn2(label: Text("Fecha pago:"),),
-                  DataColumn2(label: Text("Prox. pago:"),),
+                  DataColumn2(label: Text("Fecha \nde pago:"),),
+                  DataColumn2(label: Text("Próximo \npago:"),),
                   DataColumn2(label: Text("Monto:"),),
                   DataColumn2(label: Text("Tipo:"),),
                   DataColumn2(label: Text("Editar:"),),
