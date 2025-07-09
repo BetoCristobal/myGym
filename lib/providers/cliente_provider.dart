@@ -123,19 +123,19 @@ class ClienteProvider extends ChangeNotifier{
       break;
 
       case Opciones.vencidos:
-        _clientesFiltrados = _clientes.where((c) => c.estatus == "vencido").toList();
+        _clientesFiltrados = _clientes.where((c) => c.estatus == "Pago vencido").toList();
       break;
 
       case Opciones.urgentes:
-        _clientesFiltrados = _clientes.where((c) => c.estatus == "urgente").toList();
+        _clientesFiltrados = _clientes.where((c) => c.estatus == "Pago urgente").toList();
       break;
 
       case Opciones.proximos:
-        _clientesFiltrados = _clientes.where((c) => c.estatus == "proximo").toList();
+        _clientesFiltrados = _clientes.where((c) => c.estatus == "Próximo a pagar").toList();
       break;
 
       case Opciones.corrientes:
-        _clientesFiltrados = _clientes.where((c) => c.estatus == "corriente").toList();
+        _clientesFiltrados = _clientes.where((c) => c.estatus == "Pago al corriente").toList();
       break;
     }
     notifyListeners();

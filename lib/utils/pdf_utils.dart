@@ -30,7 +30,7 @@ Future<void> exportarReportePDFYGuardarEnDescargas(ReportesProvider reportesProv
         pw.SizedBox(height: 10),
         pw.Table.fromTextArray(
           border: pw.TableBorder.all(),
-          headers: ['Cliente', "Fecha", "Monto", "Tipo"],
+          headers: ['Cliente', "Fecha de pago", "Monto", "Tipo"],
           data: reportesProvider.reportesMostrar.map((r) {
               return[
                 r.nombreCliente,

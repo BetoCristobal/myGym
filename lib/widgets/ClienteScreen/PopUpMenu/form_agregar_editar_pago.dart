@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:my_gym_oficial/data/models/pago_model.dart';
 import 'package:my_gym_oficial/providers/cliente_provider.dart';
@@ -77,7 +78,7 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                     controller: montoController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: "Monto",
+                      labelText: "Monto \$\$\$",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -187,7 +188,9 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                 Container(
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 10, bottom: 20),
-                  child: ElevatedButton(
+                  child: ElevatedButton.icon(
+                    icon: Icon(FontAwesomeIcons.sackDollar, color: Colors.white,),
+                    label: Text(widget.estaEditando == false ? "Guardar pago" : "Actualizar pago", style: TextStyle(color: Colors.white),),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 29, 173, 33)
                     ),
@@ -232,7 +235,7 @@ final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
                         );
                       }
                     }, 
-                    child: Text(widget.estaEditando == false ? "Guardar pago" : "Actualizar pago", style: TextStyle(color: Colors.white),)
+                    //child: Text(widget.estaEditando == false ? "Guardar pago" : "Actualizar pago", style: TextStyle(color: Colors.white),)
                   ),
                 ),
               ],

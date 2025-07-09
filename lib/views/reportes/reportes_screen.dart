@@ -51,7 +51,13 @@ class _ReportesScreenState extends State<ReportesScreen> {
           IconButton(
             highlightColor: Colors.white38,
             onPressed: () {
-            Provider.of<ReportesProvider>(context, listen: false).reiniciarFiltros();}, icon: const Icon(Icons.restart_alt)
+              Provider.of<ReportesProvider>(context, listen: false).reiniciarFiltros();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("✅ Filtros restaurados")),
+              );
+            }, 
+            icon: const Icon(Icons.restart_alt)
+            
           ),
 
           // ICONO APLICAR FILTROS
@@ -125,15 +131,24 @@ class _ReportesScreenState extends State<ReportesScreen> {
                     minWidth: 450,
                     columns: [
                       //DataColumn(label: Text("#")),
-                      DataColumn2(label: Text("Cliente:")),
-                      DataColumn2(label: Text("Fecha:"), ),
+                      DataColumn2(label: Text("Nombre cliente:")),
+                      DataColumn2(label: Text("Fecha pago:"), ),
                       DataColumn2(label: Text("Monto:"), size: ColumnSize.S),
                       DataColumn2(label: Text("Tipo:"),),
                     ], 
-                    rows: reportesProvider.reportesMostrar.map((reporte) {
+                    rows: reportesProvider.reportesMostrar.asMap().entries.map((entry) {
+
+                      final index = entry.key;
+                      final reporte = entry.value;
                       
                       final txtFechaPago = DateFormat("dd-MM-yyyy").format(reporte.fechaPago);
                       return DataRow(
+                        color: MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) {
+                            // Alternar colores claros para mejorar la legibilidad
+                            return index % 2 == 0 ? Colors.grey.shade200 : Colors.white;
+                          },
+                        ),
                         cells: [
                           DataCell(Text(reporte.nombreCliente, maxLines: 2,  overflow: TextOverflow.ellipsis,)),
                           DataCell(Text(txtFechaPago)),

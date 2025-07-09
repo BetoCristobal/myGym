@@ -1,13 +1,13 @@
 
 String asignarEmoji(String estatus) {
   switch (estatus) {
-    case 'vencido':
+    case 'Pago vencido':
       return '❌'; // Emoji para vencido
-    case 'urgente':
+    case 'Pago urgente':
       return '⚠️'; // Emoji para urgente
-    case 'proximo':
+    case 'Próximo a pagar':
       return '🟡'; // Emoji para próximo
-    case 'corriente':
+    case 'Pago al corriente':
       return '✅'; // Emoji para activo
     default:
       return ''; // Emoji por defecto si no coincide con ningún caso

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_gym_oficial/data/models/cliente_model.dart';
 import 'package:my_gym_oficial/styles/text_styles.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/funciones_foto.dart';
@@ -115,9 +116,9 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                     ),
                     // IMAGEN FOTO ----------------------------------------------------------------------
                     fotoTemporal != null
-                      ? Image.file(fotoTemporal!, width: 150, height: 150, fit: BoxFit.cover,)
+                      ? ClipRRect(borderRadius: BorderRadius.circular(50), child: Image.file(fotoTemporal!, width: 150, height: 150, fit: BoxFit.cover,))
                       : (_fotoPath != null && File(_fotoPath!).existsSync()
-                        ? Image.file(File(_fotoPath!), width: 150, height:  150, fit: BoxFit.cover,)
+                        ? ClipRRect(borderRadius: BorderRadius.circular(50), child: Image.file(File(_fotoPath!), width: 150, height:  150, fit: BoxFit.cover,))
                         : const Icon(Icons.person, size: 150,)
                       )
                   ],
@@ -191,7 +192,9 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   width: double.infinity,
-                  child: ElevatedButton(
+                  child: ElevatedButton.icon(
+                    icon: Icon(FontAwesomeIcons.floppyDisk, color: Colors.white,),
+                    label: Text(widget.estaEditando == false ? "Guardar cliente" : "Actualizar cliente", style: TextStyle(color: Colors.white),),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 29, 173, 33)
                     ),
@@ -243,10 +246,13 @@ class _FormAgregarEditarClienteState extends State<FormAgregarEditarCliente> {
                             _fotoPath, // Si se actualiza la foto, se pasa la nueva ruta
                           );
                           Navigator.pop(context);
+                          
                         }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(widget.estaEditando == false ? "👌Cliente guardado" : "👌Cliente actualizado")),
+                        );
                       }
                     }, 
-                    child: Text(widget.estaEditando == false ? "Guardar cliente" : "Actualizar cliente", style: TextStyle(color: Colors.white),)
                   ),
                 )
               ],

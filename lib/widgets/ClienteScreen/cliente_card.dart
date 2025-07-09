@@ -8,12 +8,8 @@ import 'package:my_gym_oficial/utils/asignar_color_fondo_card_cliente.dart';
 import 'package:my_gym_oficial/utils/asignar_emoji.dart';
 import 'package:my_gym_oficial/utils/asignar_estatus.dart';
 import 'package:my_gym_oficial/utils/calcular_dias_restantes.dart';
-import 'package:my_gym_oficial/utils/enviar_whatsapp.dart';
 import 'package:my_gym_oficial/views/informacion/informacion_screen.dart';
-import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/alert_dialog_eliminar_cliente.dart';
 import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/form_agregar_editar_pago.dart';
-import 'package:my_gym_oficial/widgets/ClienteScreen/PopUpMenu/ver_pagos.dart';
-import 'package:my_gym_oficial/widgets/ClienteScreen/form_agregar_editar_cliente.dart';
 import 'package:provider/provider.dart';
 
 class ClienteCard extends StatelessWidget {
@@ -58,7 +54,6 @@ class ClienteCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(emoji),
                         SizedBox(width: 10,),
@@ -93,13 +88,7 @@ class ClienteCard extends StatelessWidget {
                       onSelected: (value) async {
                         switch(value) {
                           case 'ver_informacion':
-                            //alertDialogVerInformacion(context, cliente);
-                            await Navigator.push(context, MaterialPageRoute(builder: (context) => InformacionScreen(clienteId: cliente.id!, ultimoPago: ultimoPago,)));
-                            // print("✅✅✅✅✅✅$result");
-                            // if(result is int) {
-                            //   final clienteProvider = Provider.of<ClienteProvider>(context, listen: false);
-                            //   await clienteProvider.eliminarCliente(result);
-                            // } 
+                            await Navigator.push(context, MaterialPageRoute(builder: (context) => InformacionScreen(clienteId: cliente.id!, ultimoPago: ultimoPago,)));                            
                             break;  
                   
                           case 'realizar_pago':
@@ -130,9 +119,9 @@ class ClienteCard extends StatelessWidget {
                           //   );
                           //   break;
                   
-                          case 'eliminar_cliente':
-                            AlertDialogEliminarCliente(context, cliente.id!);
-                            break;
+                          // case 'eliminar_cliente':
+                          //   AlertDialogEliminarCliente(context, cliente.id!);
+                          //   break;
                         }
                       },
                       itemBuilder: (BuildContext context) {
@@ -157,10 +146,10 @@ class ClienteCard extends StatelessWidget {
                           //   value: "editar_cliente",
                           //   child: Text("Editar cliente")
                           // ),
-                          PopupMenuItem(
-                            value: 'eliminar_cliente',
-                            child: Text("Eliminar cliente")
-                          ),
+                          // PopupMenuItem(
+                          //   value: 'eliminar_cliente',
+                          //   child: Text("Eliminar cliente")
+                          // ),
                         ];
                       }
                     ),

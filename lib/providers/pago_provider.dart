@@ -46,6 +46,7 @@ class PagoProvider extends ChangeNotifier {
       );
       await pagoRepo.insertPago(nuevoPago);
       print("✅Se agrego nuevo pago: $nuevoPago");
+      await cargarPagosClientePorId(idCliente);
       await cargarPagosTodosById();
     }catch(e) {
       print("❌Error al agregar pago: $e");
